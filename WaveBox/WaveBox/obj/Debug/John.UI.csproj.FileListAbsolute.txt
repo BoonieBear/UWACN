@@ -1,0 +1,7 @@
+F:\工作\水声通信网\WaveBox\WaveBox\obj\Debug\ResolveAssemblyReference.cache
+F:\工作\水声通信网\WaveBox\WaveBox\obj\Debug\WaveBox.WaveBox.resources
+F:\工作\水声通信网\WaveBox\WaveBox\obj\Debug\John.UI.csproj.GenerateResource.Cache
+F:\工作\水声通信网\WaveBox\WaveBox\bin\Debug\WaveBox.dll
+F:\工作\水声通信网\WaveBox\WaveBox\bin\Debug\WaveBox.pdb
+F:\工作\水声通信网\WaveBox\WaveBox\obj\Debug\WaveBox.dll
+F:\工作\水声通信网\WaveBox\WaveBox\obj\Debug\WaveBox.pdb

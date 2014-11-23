@@ -1,0 +1,12 @@
+F:\工作\水声通信网\波形生成\WaveGenarator\obj\Debug\ResolveAssemblyReference.cache
+F:\工作\水声通信网\波形生成\WaveGenarator\obj\Debug\WaveGenarator.Properties.Resources.resources
+F:\工作\水声通信网\波形生成\WaveGenarator\obj\Debug\WaveGenarator.csproj.GenerateResource.Cache
+F:\工作\水声通信网\波形生成\WaveGenarator\bin\Debug\WaveGenarator.exe
+F:\工作\水声通信网\波形生成\WaveGenarator\bin\Debug\WaveGenarator.pdb
+F:\工作\水声通信网\波形生成\WaveGenarator\bin\Debug\IrisSkin2.dll
+F:\工作\水声通信网\波形生成\WaveGenarator\bin\Debug\ProgressRoller.pdb
+F:\工作\水声通信网\波形生成\WaveGenarator\bin\Debug\ProgressRoller.xml
+F:\工作\水声通信网\波形生成\WaveGenarator\obj\Debug\WaveGenarator.exe
+F:\工作\水声通信网\波形生成\WaveGenarator\obj\Debug\WaveGenarator.pdb
+F:\工作\水声通信网\波形生成\WaveGenarator\obj\Debug\WaveGenarator.Form1.resources
+F:\工作\水声通信网\波形生成\WaveGenarator\bin\Debug\WaveGenarator.exe.config

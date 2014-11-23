@@ -1,0 +1,8 @@
+F:\工作\水声通信网\CRCBuilder\CRCBuilder\bin\Debug\CRCBuilder.exe
+F:\工作\水声通信网\CRCBuilder\CRCBuilder\bin\Debug\CRCBuilder.pdb
+F:\工作\水声通信网\CRCBuilder\CRCBuilder\obj\Debug\ResolveAssemblyReference.cache
+F:\工作\水声通信网\CRCBuilder\CRCBuilder\obj\Debug\CRCBuilder.Form1.resources
+F:\工作\水声通信网\CRCBuilder\CRCBuilder\obj\Debug\CRCBuilder.Properties.Resources.resources
+F:\工作\水声通信网\CRCBuilder\CRCBuilder\obj\Debug\CRCBuilder.csproj.GenerateResource.Cache
+F:\工作\水声通信网\CRCBuilder\CRCBuilder\obj\Debug\CRCBuilder.exe
+F:\工作\水声通信网\CRCBuilder\CRCBuilder\obj\Debug\CRCBuilder.pdb

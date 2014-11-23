@@ -1,0 +1,10 @@
+F:\工作\水声通信网\MSPTracer\MSPTracer\bin\Debug\MSPTracer.exe
+F:\工作\水声通信网\MSPTracer\MSPTracer\bin\Debug\MSPTracer.pdb
+F:\工作\水声通信网\MSPTracer\MSPTracer\obj\Debug\ResolveAssemblyReference.cache
+F:\工作\水声通信网\MSPTracer\MSPTracer\obj\Debug\MSPTracer.Form1.resources
+F:\工作\水声通信网\MSPTracer\MSPTracer\obj\Debug\MSPTracer.Properties.Resources.resources
+F:\工作\水声通信网\MSPTracer\MSPTracer\obj\Debug\MSPTracer.csproj.GenerateResource.Cache
+F:\工作\水声通信网\MSPTracer\MSPTracer\obj\Debug\MSPTracer.exe
+F:\工作\水声通信网\MSPTracer\MSPTracer\obj\Debug\MSPTracer.pdb
+F:\工作\水声通信网\MSPTracer\MSPTracer\bin\Debug\IrisSkin2.dll
+F:\工作\水声通信网\MSPTracer\MSPTracer\bin\Debug\DevComponents.DotNetBar2.dll
