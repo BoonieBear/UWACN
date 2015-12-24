@@ -183,6 +183,12 @@
     <Compile Include="Forms\EnergyForm.Designer.cs">
       <DependentUpon>EnergyForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SupplyConfigForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SupplyConfigForm.Designer.cs">
+      <DependentUpon>SupplyConfigForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\UserMapForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -366,6 +372,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SetWakeForm.resx">
       <DependentUpon>SetWakeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SupplyConfigForm.resx">
+      <DependentUpon>SupplyConfigForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TestForm.resx">
       <DependentUpon>TestForm.cs</DependentUpon>

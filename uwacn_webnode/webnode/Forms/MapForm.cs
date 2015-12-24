@@ -317,7 +317,7 @@ namespace webnode.Forms
             SourceDataClass.DataId.Add(244, "给DSP上电");
             SourceDataClass.DataId.Add(243, "清零单片机重启次数");
             SourceDataClass.DataId.Add(242, "DSP进入Loader模式");
-
+            SourceDataClass.DataId.Add(241, "外电配置");
             //MSP上传数据命令
             SourceDataClass.DataId.Add(2, "DSP故障命令");
             SourceDataClass.DataId.Add(6, "上位机发布430休眠命令");
@@ -2529,22 +2529,7 @@ namespace webnode.Forms
                         case "BESTPOSA":
                             if (GpsHelper.CalculateBlockCRC32(newcomming.Substring(1, newcomming.Length-10)) == gpsinfo[gpsinfo.Length - 1])
                             {
-                                sollabel.Text = gpsinfo[11];
-                                poslabel.Text = gpsinfo[12];
-                                latlabel.Text = gpsinfo[13];
-                                lnglabel.Text = gpsinfo[14];
-                                hgtlabel.Text = gpsinfo[15];
-                                latsdlabel.Text = gpsinfo[18];
-                                lngsdlabel.Text = gpsinfo[19];
-                                hgtsdlabel.Text = gpsinfo[20];
-                                tracklabel.Text = gpsinfo[24];
-                                uselabel.Text = gpsinfo[25];
-                                EventsClass.lnglatEventArgs ll = new EventsClass.lnglatEventArgs(Double.Parse(gpsinfo[14]), Double.Parse(gpsinfo[13]),bearing);
-                                latlngEventHandler handler = GpslatlngEvent;
-                                if(handler != null)
-                                {
-                                    handler(this,ll);
-                                }
+                                
                             }   
                             break;
 
@@ -4031,6 +4016,33 @@ namespace webnode.Forms
 
             }
         }
+        private void SupplyConfig_Click(object sender, EventArgs e)
+        {
+            SupplyConfigForm scf = new SupplyConfigForm();
+            if (scf.ShowDialog() == DialogResult.OK)
+            {
+                string high = "0";
+                string low="0";
+                if (scf.HighSelect.SelectedIndex==0)
+                {
+                    high = "1";
+                }
+                if (scf.LowSelect.SelectedIndex==0)
+                {
+                    low = "1";
+                }
+                string cmd = high + low;
+                byte[] b = SourceDataClass.CommPackage(241, CRCHelper.ConvertHexToChar(cmd));
+                if (WriteMSPCommand(b))
+                {
+                    MSPCmdFile.OpenFile(MainForm.pMainForm.SerialCmdPathInfo);
+                    MSPCmdFile.BinaryWrite(b);
+                    MSPCmdFile.close();
+                    MsgLog(MsgMode.SerialCmd, 241, "上位机", "MSP430", (string)SourceDataClass.DataId[241]);
+                }
+            }
+            scf.Dispose();
+        }
         #endregion
 
         #region 调试栏操作
@@ -4513,6 +4525,8 @@ namespace webnode.Forms
 
         }
         #endregion
+
+        
 
 
 
