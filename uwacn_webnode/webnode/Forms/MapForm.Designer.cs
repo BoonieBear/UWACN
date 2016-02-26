@@ -72,6 +72,7 @@
             this.panelDockContainer2 = new DevComponents.DotNetBar.PanelDockContainer();
             this.sideBar1 = new DevComponents.DotNetBar.SideBar();
             this.sideBarPanelItem1 = new DevComponents.DotNetBar.SideBarPanelItem();
+            this.SupplyConfig = new DevComponents.DotNetBar.ButtonItem();
             this.ClearRebootBtn = new DevComponents.DotNetBar.ButtonItem();
             this.ReadStat = new DevComponents.DotNetBar.ButtonItem();
             this.SetTime = new DevComponents.DotNetBar.ButtonItem();
@@ -126,6 +127,14 @@
             this.dockSite1 = new DevComponents.DotNetBar.DockSite();
             this.dockSite2 = new DevComponents.DotNetBar.DockSite();
             this.Sidebar = new DevComponents.DotNetBar.Bar();
+            this.panelDockContainer5 = new DevComponents.DotNetBar.PanelDockContainer();
+            this.sideBar3 = new DevComponents.DotNetBar.SideBar();
+            this.sideBarPanelItem5 = new DevComponents.DotNetBar.SideBarPanelItem();
+            this.GetTDData = new DevComponents.DotNetBar.ButtonItem();
+            this.获取设备状态 = new DevComponents.DotNetBar.ButtonItem();
+            this.DataEmitSet = new DevComponents.DotNetBar.ButtonItem();
+            this.SetDeviceParameter = new DevComponents.DotNetBar.ButtonItem();
+            this.panelDockContainer3 = new DevComponents.DotNetBar.PanelDockContainer();
             this.panelDockContainer1 = new DevComponents.DotNetBar.PanelDockContainer();
             this.sideBar2 = new DevComponents.DotNetBar.SideBar();
             this.sideBarPanelItem4 = new DevComponents.DotNetBar.SideBarPanelItem();
@@ -142,14 +151,6 @@
             this.EmitSet = new DevComponents.DotNetBar.ButtonItem();
             this.CommTypeSet = new DevComponents.DotNetBar.ButtonItem();
             this.GridReset = new DevComponents.DotNetBar.ButtonItem();
-            this.panelDockContainer5 = new DevComponents.DotNetBar.PanelDockContainer();
-            this.sideBar3 = new DevComponents.DotNetBar.SideBar();
-            this.sideBarPanelItem5 = new DevComponents.DotNetBar.SideBarPanelItem();
-            this.GetTDData = new DevComponents.DotNetBar.ButtonItem();
-            this.获取设备状态 = new DevComponents.DotNetBar.ButtonItem();
-            this.DataEmitSet = new DevComponents.DotNetBar.ButtonItem();
-            this.SetDeviceParameter = new DevComponents.DotNetBar.ButtonItem();
-            this.panelDockContainer3 = new DevComponents.DotNetBar.PanelDockContainer();
             this.dockContainerItem4 = new DevComponents.DotNetBar.DockContainerItem();
             this.dockContainerItem5 = new DevComponents.DotNetBar.DockContainerItem();
             this.GPS = new DevComponents.DotNetBar.DockContainerItem();
@@ -210,7 +211,6 @@
             this.PlayBackTimer = new System.Windows.Forms.Timer(this.components);
             this.openDepthFile = new System.Windows.Forms.OpenFileDialog();
             this.MainMap = new webnode.MapCustom.Map();
-            this.SupplyConfig = new DevComponents.DotNetBar.ButtonItem();
             this.panelDockContainer4.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -230,9 +230,9 @@
             this.dockSite2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Sidebar)).BeginInit();
             this.Sidebar.SuspendLayout();
-            this.panelDockContainer1.SuspendLayout();
             this.panelDockContainer5.SuspendLayout();
             this.panelDockContainer3.SuspendLayout();
+            this.panelDockContainer1.SuspendLayout();
             this.MapContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -370,7 +370,7 @@
             this.play.Image = ((System.Drawing.Image)(resources.GetObject("play.Image")));
             this.play.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.play.Name = "play";
-            this.play.Size = new System.Drawing.Size(23, 28);
+            this.play.Size = new System.Drawing.Size(23, 20);
             this.play.ToolTipText = "开始回放";
             this.play.Click += new System.EventHandler(this.play_Click);
             // 
@@ -381,7 +381,7 @@
             this.pause.Image = ((System.Drawing.Image)(resources.GetObject("pause.Image")));
             this.pause.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.pause.Name = "pause";
-            this.pause.Size = new System.Drawing.Size(23, 28);
+            this.pause.Size = new System.Drawing.Size(23, 20);
             this.pause.ToolTipText = "暂停回放";
             this.pause.Click += new System.EventHandler(this.pause_Click);
             // 
@@ -466,7 +466,7 @@
             this.SysLogPage.Controls.Add(this.LogBox);
             this.SysLogPage.Location = new System.Drawing.Point(4, 4);
             this.SysLogPage.Name = "SysLogPage";
-            this.SysLogPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.SysLogPage.Padding = new System.Windows.Forms.Padding(3);
             this.SysLogPage.Size = new System.Drawing.Size(348, 196);
             this.SysLogPage.TabIndex = 1;
             this.SysLogPage.Text = "系统";
@@ -493,7 +493,7 @@
             this.CommPage.Controls.Add(this.tableLayoutPanel3);
             this.CommPage.Location = new System.Drawing.Point(4, 4);
             this.CommPage.Name = "CommPage";
-            this.CommPage.Size = new System.Drawing.Size(349, 203);
+            this.CommPage.Size = new System.Drawing.Size(348, 196);
             this.CommPage.TabIndex = 2;
             this.CommPage.Text = "串口";
             this.CommPage.UseVisualStyleBackColor = true;
@@ -510,7 +510,7 @@
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(349, 203);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(348, 196);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // tableLayoutPanel4
@@ -587,8 +587,8 @@
             this.NetPage.Controls.Add(this.tableLayoutPanel2);
             this.NetPage.Location = new System.Drawing.Point(4, 4);
             this.NetPage.Name = "NetPage";
-            this.NetPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.NetPage.Size = new System.Drawing.Size(349, 203);
+            this.NetPage.Padding = new System.Windows.Forms.Padding(3);
+            this.NetPage.Size = new System.Drawing.Size(348, 196);
             this.NetPage.TabIndex = 0;
             this.NetPage.Text = "网络";
             this.NetPage.UseVisualStyleBackColor = true;
@@ -607,7 +607,7 @@
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(343, 197);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(342, 190);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // NetLogBox
@@ -621,7 +621,7 @@
             this.NetLogBox.Name = "NetLogBox";
             this.NetLogBox.ReadOnly = true;
             this.NetLogBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.NetLogBox.Size = new System.Drawing.Size(341, 170);
+            this.NetLogBox.Size = new System.Drawing.Size(340, 163);
             this.NetLogBox.TabIndex = 17;
             // 
             // label14
@@ -630,7 +630,7 @@
             this.label14.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label14.Location = new System.Drawing.Point(174, 0);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(166, 25);
+            this.label14.Size = new System.Drawing.Size(165, 25);
             this.label14.TabIndex = 4;
             this.label14.Text = "连接网络";
             this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -833,6 +833,15 @@
             this.DSPloader});
             this.sideBarPanelItem1.Text = "MSP430命令";
             this.sideBarPanelItem1.ThemeAware = true;
+            // 
+            // SupplyConfig
+            // 
+            this.SupplyConfig.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText;
+            this.SupplyConfig.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top;
+            this.SupplyConfig.Name = "SupplyConfig";
+            this.SupplyConfig.Text = "外电配置";
+            this.SupplyConfig.ThemeAware = true;
+            this.SupplyConfig.Click += new System.EventHandler(this.SupplyConfig_Click);
             // 
             // ClearRebootBtn
             // 
@@ -1411,9 +1420,9 @@
             this.Sidebar.AutoSyncBarCaption = true;
             this.Sidebar.CloseSingleTab = true;
             this.Sidebar.Controls.Add(this.panelDockContainer2);
+            this.Sidebar.Controls.Add(this.panelDockContainer1);
             this.Sidebar.Controls.Add(this.panelDockContainer5);
             this.Sidebar.Controls.Add(this.panelDockContainer3);
-            this.Sidebar.Controls.Add(this.panelDockContainer1);
             this.Sidebar.Dock = System.Windows.Forms.DockStyle.Right;
             this.Sidebar.DockTabAlignment = DevComponents.DotNetBar.eTabStripAlignment.Right;
             this.Sidebar.FadeEffect = true;
@@ -1435,6 +1444,157 @@
             this.Sidebar.TabStop = false;
             this.Sidebar.Text = "MSP命令";
             this.Sidebar.WrapItemsDock = true;
+            // 
+            // panelDockContainer5
+            // 
+            this.panelDockContainer5.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2010;
+            this.panelDockContainer5.Controls.Add(this.sideBar3);
+            this.panelDockContainer5.Location = new System.Drawing.Point(3, 23);
+            this.panelDockContainer5.Name = "panelDockContainer5";
+            this.panelDockContainer5.Size = new System.Drawing.Size(129, 421);
+            this.panelDockContainer5.Style.Alignment = System.Drawing.StringAlignment.Center;
+            this.panelDockContainer5.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
+            this.panelDockContainer5.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2;
+            this.panelDockContainer5.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
+            this.panelDockContainer5.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
+            this.panelDockContainer5.Style.GradientAngle = 90;
+            this.panelDockContainer5.TabIndex = 8;
+            // 
+            // sideBar3
+            // 
+            this.sideBar3.AccessibleRole = System.Windows.Forms.AccessibleRole.ToolBar;
+            this.sideBar3.Appearance = DevComponents.DotNetBar.eSideBarAppearance.Flat;
+            this.sideBar3.BorderStyle = DevComponents.DotNetBar.eBorderType.None;
+            this.sideBar3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sideBar3.ExpandedPanel = this.sideBarPanelItem5;
+            this.sideBar3.Location = new System.Drawing.Point(0, 0);
+            this.sideBar3.Name = "sideBar3";
+            this.sideBar3.Panels.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.sideBarPanelItem5});
+            this.sideBar3.Size = new System.Drawing.Size(129, 421);
+            this.sideBar3.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2010;
+            this.sideBar3.TabIndex = 0;
+            this.sideBar3.Text = "sideBar3";
+            this.sideBar3.UsingSystemColors = true;
+            // 
+            // sideBarPanelItem5
+            // 
+            this.sideBarPanelItem5.BackgroundStyle.BackColor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(246)))), ((int)(((byte)(246)))));
+            this.sideBarPanelItem5.BackgroundStyle.BackColor2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
+            this.sideBarPanelItem5.BackgroundStyle.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
+            this.sideBarPanelItem5.BackgroundStyle.BorderColor.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(45)))), ((int)(((byte)(150)))));
+            this.sideBarPanelItem5.BackgroundStyle.ForeColor.Color = System.Drawing.SystemColors.ControlText;
+            this.sideBarPanelItem5.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.sideBarPanelItem5.FontBold = true;
+            this.sideBarPanelItem5.HeaderHotStyle.BackColor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(135)))), ((int)(((byte)(173)))), ((int)(((byte)(228)))));
+            this.sideBarPanelItem5.HeaderHotStyle.BackColor2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(239)))), ((int)(((byte)(255)))));
+            this.sideBarPanelItem5.HeaderHotStyle.ForeColor.Color = System.Drawing.SystemColors.ControlText;
+            this.sideBarPanelItem5.HeaderHotStyle.GradientAngle = 90;
+            this.sideBarPanelItem5.HeaderSideHotStyle.BackColor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(135)))), ((int)(((byte)(173)))), ((int)(((byte)(228)))));
+            this.sideBarPanelItem5.HeaderSideHotStyle.BackColor2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(239)))), ((int)(((byte)(255)))));
+            this.sideBarPanelItem5.HeaderSideHotStyle.GradientAngle = 90;
+            this.sideBarPanelItem5.HeaderSideStyle.BackColor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(237)))), ((int)(((byte)(254)))));
+            this.sideBarPanelItem5.HeaderSideStyle.BackColor2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(179)))), ((int)(((byte)(231)))));
+            this.sideBarPanelItem5.HeaderSideStyle.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
+            this.sideBarPanelItem5.HeaderSideStyle.BorderColor.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(45)))), ((int)(((byte)(150)))));
+            this.sideBarPanelItem5.HeaderSideStyle.BorderSide = ((DevComponents.DotNetBar.eBorderSide)(((DevComponents.DotNetBar.eBorderSide.Left | DevComponents.DotNetBar.eBorderSide.Top) 
+            | DevComponents.DotNetBar.eBorderSide.Bottom)));
+            this.sideBarPanelItem5.HeaderSideStyle.GradientAngle = 90;
+            this.sideBarPanelItem5.HeaderStyle.BackColor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(239)))), ((int)(((byte)(255)))));
+            this.sideBarPanelItem5.HeaderStyle.BackColor2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(135)))), ((int)(((byte)(173)))), ((int)(((byte)(228)))));
+            this.sideBarPanelItem5.HeaderStyle.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
+            this.sideBarPanelItem5.HeaderStyle.BorderColor.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(45)))), ((int)(((byte)(150)))));
+            this.sideBarPanelItem5.HeaderStyle.BorderSide = ((DevComponents.DotNetBar.eBorderSide)(((DevComponents.DotNetBar.eBorderSide.Right | DevComponents.DotNetBar.eBorderSide.Top) 
+            | DevComponents.DotNetBar.eBorderSide.Bottom)));
+            this.sideBarPanelItem5.HeaderStyle.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
+            this.sideBarPanelItem5.HeaderStyle.ForeColor.Color = System.Drawing.SystemColors.ControlText;
+            this.sideBarPanelItem5.HeaderStyle.GradientAngle = 90;
+            this.sideBarPanelItem5.Icon = ((System.Drawing.Icon)(resources.GetObject("sideBarPanelItem5.Icon")));
+            this.sideBarPanelItem5.Name = "sideBarPanelItem5";
+            this.sideBarPanelItem5.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.GetTDData,
+            this.获取设备状态,
+            this.DataEmitSet,
+            this.SetDeviceParameter});
+            this.sideBarPanelItem5.Text = "设备命令";
+            // 
+            // GetTDData
+            // 
+            this.GetTDData.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText;
+            this.GetTDData.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top;
+            this.GetTDData.Name = "GetTDData";
+            this.GetTDData.Text = "获取设备数据";
+            this.GetTDData.Tooltip = "索取节点所接设备信息";
+            this.GetTDData.Click += new System.EventHandler(this.GetTDData_Click);
+            // 
+            // 获取设备状态
+            // 
+            this.获取设备状态.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText;
+            this.获取设备状态.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top;
+            this.获取设备状态.Name = "获取设备状态";
+            this.获取设备状态.Text = "获取设备状态";
+            this.获取设备状态.Tooltip = "得到节点上设备的运行状态";
+            this.获取设备状态.Click += new System.EventHandler(this.获取设备状态_Click);
+            // 
+            // DataEmitSet
+            // 
+            this.DataEmitSet.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText;
+            this.DataEmitSet.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top;
+            this.DataEmitSet.Name = "DataEmitSet";
+            this.DataEmitSet.Text = "设备回传设置";
+            this.DataEmitSet.Tooltip = "设定节点所接设备回传时间间隔";
+            this.DataEmitSet.Click += new System.EventHandler(this.DataEmitSet_Click);
+            // 
+            // SetDeviceParameter
+            // 
+            this.SetDeviceParameter.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText;
+            this.SetDeviceParameter.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top;
+            this.SetDeviceParameter.Name = "SetDeviceParameter";
+            this.SetDeviceParameter.Text = "设备参数设置";
+            this.SetDeviceParameter.Tooltip = "透明设置设备参数";
+            this.SetDeviceParameter.Click += new System.EventHandler(this.SetDeviceParameter_Click);
+            // 
+            // panelDockContainer3
+            // 
+            this.panelDockContainer3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2010;
+            this.panelDockContainer3.Controls.Add(this.GpsLog);
+            this.panelDockContainer3.Controls.Add(this.label1);
+            this.panelDockContainer3.Controls.Add(this.speedlabel);
+            this.panelDockContainer3.Controls.Add(this.degreelabel);
+            this.panelDockContainer3.Controls.Add(this.label10);
+            this.panelDockContainer3.Controls.Add(this.tracklabel);
+            this.panelDockContainer3.Controls.Add(this.uselabel);
+            this.panelDockContainer3.Controls.Add(this.label11);
+            this.panelDockContainer3.Controls.Add(this.label12);
+            this.panelDockContainer3.Controls.Add(this.timelabel);
+            this.panelDockContainer3.Controls.Add(this.hgtsdlabel);
+            this.panelDockContainer3.Controls.Add(this.label13);
+            this.panelDockContainer3.Controls.Add(this.label9);
+            this.panelDockContainer3.Controls.Add(this.latsdlabel);
+            this.panelDockContainer3.Controls.Add(this.hgtlabel);
+            this.panelDockContainer3.Controls.Add(this.label6);
+            this.panelDockContainer3.Controls.Add(this.label7);
+            this.panelDockContainer3.Controls.Add(this.lngsdlabel);
+            this.panelDockContainer3.Controls.Add(this.label8);
+            this.panelDockContainer3.Controls.Add(this.poslabel);
+            this.panelDockContainer3.Controls.Add(this.label4);
+            this.panelDockContainer3.Controls.Add(this.sollabel);
+            this.panelDockContainer3.Controls.Add(this.latlabel);
+            this.panelDockContainer3.Controls.Add(this.label5);
+            this.panelDockContainer3.Controls.Add(this.label3);
+            this.panelDockContainer3.Controls.Add(this.label2);
+            this.panelDockContainer3.Controls.Add(this.lnglabel);
+            this.panelDockContainer3.Location = new System.Drawing.Point(3, 23);
+            this.panelDockContainer3.Name = "panelDockContainer3";
+            this.panelDockContainer3.Size = new System.Drawing.Size(129, 421);
+            this.panelDockContainer3.Style.Alignment = System.Drawing.StringAlignment.Center;
+            this.panelDockContainer3.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
+            this.panelDockContainer3.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
+            this.panelDockContainer3.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
+            this.panelDockContainer3.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder;
+            this.panelDockContainer3.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
+            this.panelDockContainer3.Style.GradientAngle = 90;
+            this.panelDockContainer3.TabIndex = 2;
             // 
             // panelDockContainer1
             // 
@@ -1636,157 +1796,6 @@
             this.GridReset.Tooltip = "将所有节点状态复位";
             this.GridReset.Click += new System.EventHandler(this.GridReset_Click);
             // 
-            // panelDockContainer5
-            // 
-            this.panelDockContainer5.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2010;
-            this.panelDockContainer5.Controls.Add(this.sideBar3);
-            this.panelDockContainer5.Location = new System.Drawing.Point(3, 23);
-            this.panelDockContainer5.Name = "panelDockContainer5";
-            this.panelDockContainer5.Size = new System.Drawing.Size(129, 421);
-            this.panelDockContainer5.Style.Alignment = System.Drawing.StringAlignment.Center;
-            this.panelDockContainer5.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
-            this.panelDockContainer5.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2;
-            this.panelDockContainer5.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
-            this.panelDockContainer5.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
-            this.panelDockContainer5.Style.GradientAngle = 90;
-            this.panelDockContainer5.TabIndex = 8;
-            // 
-            // sideBar3
-            // 
-            this.sideBar3.AccessibleRole = System.Windows.Forms.AccessibleRole.ToolBar;
-            this.sideBar3.Appearance = DevComponents.DotNetBar.eSideBarAppearance.Flat;
-            this.sideBar3.BorderStyle = DevComponents.DotNetBar.eBorderType.None;
-            this.sideBar3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sideBar3.ExpandedPanel = this.sideBarPanelItem5;
-            this.sideBar3.Location = new System.Drawing.Point(0, 0);
-            this.sideBar3.Name = "sideBar3";
-            this.sideBar3.Panels.AddRange(new DevComponents.DotNetBar.BaseItem[] {
-            this.sideBarPanelItem5});
-            this.sideBar3.Size = new System.Drawing.Size(129, 421);
-            this.sideBar3.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2010;
-            this.sideBar3.TabIndex = 0;
-            this.sideBar3.Text = "sideBar3";
-            this.sideBar3.UsingSystemColors = true;
-            // 
-            // sideBarPanelItem5
-            // 
-            this.sideBarPanelItem5.BackgroundStyle.BackColor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(246)))), ((int)(((byte)(246)))));
-            this.sideBarPanelItem5.BackgroundStyle.BackColor2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
-            this.sideBarPanelItem5.BackgroundStyle.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
-            this.sideBarPanelItem5.BackgroundStyle.BorderColor.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(45)))), ((int)(((byte)(150)))));
-            this.sideBarPanelItem5.BackgroundStyle.ForeColor.Color = System.Drawing.SystemColors.ControlText;
-            this.sideBarPanelItem5.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.sideBarPanelItem5.FontBold = true;
-            this.sideBarPanelItem5.HeaderHotStyle.BackColor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(135)))), ((int)(((byte)(173)))), ((int)(((byte)(228)))));
-            this.sideBarPanelItem5.HeaderHotStyle.BackColor2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(239)))), ((int)(((byte)(255)))));
-            this.sideBarPanelItem5.HeaderHotStyle.ForeColor.Color = System.Drawing.SystemColors.ControlText;
-            this.sideBarPanelItem5.HeaderHotStyle.GradientAngle = 90;
-            this.sideBarPanelItem5.HeaderSideHotStyle.BackColor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(135)))), ((int)(((byte)(173)))), ((int)(((byte)(228)))));
-            this.sideBarPanelItem5.HeaderSideHotStyle.BackColor2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(239)))), ((int)(((byte)(255)))));
-            this.sideBarPanelItem5.HeaderSideHotStyle.GradientAngle = 90;
-            this.sideBarPanelItem5.HeaderSideStyle.BackColor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(237)))), ((int)(((byte)(254)))));
-            this.sideBarPanelItem5.HeaderSideStyle.BackColor2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(179)))), ((int)(((byte)(231)))));
-            this.sideBarPanelItem5.HeaderSideStyle.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
-            this.sideBarPanelItem5.HeaderSideStyle.BorderColor.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(45)))), ((int)(((byte)(150)))));
-            this.sideBarPanelItem5.HeaderSideStyle.BorderSide = ((DevComponents.DotNetBar.eBorderSide)(((DevComponents.DotNetBar.eBorderSide.Left | DevComponents.DotNetBar.eBorderSide.Top) 
-            | DevComponents.DotNetBar.eBorderSide.Bottom)));
-            this.sideBarPanelItem5.HeaderSideStyle.GradientAngle = 90;
-            this.sideBarPanelItem5.HeaderStyle.BackColor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(239)))), ((int)(((byte)(255)))));
-            this.sideBarPanelItem5.HeaderStyle.BackColor2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(135)))), ((int)(((byte)(173)))), ((int)(((byte)(228)))));
-            this.sideBarPanelItem5.HeaderStyle.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
-            this.sideBarPanelItem5.HeaderStyle.BorderColor.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(45)))), ((int)(((byte)(150)))));
-            this.sideBarPanelItem5.HeaderStyle.BorderSide = ((DevComponents.DotNetBar.eBorderSide)(((DevComponents.DotNetBar.eBorderSide.Right | DevComponents.DotNetBar.eBorderSide.Top) 
-            | DevComponents.DotNetBar.eBorderSide.Bottom)));
-            this.sideBarPanelItem5.HeaderStyle.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
-            this.sideBarPanelItem5.HeaderStyle.ForeColor.Color = System.Drawing.SystemColors.ControlText;
-            this.sideBarPanelItem5.HeaderStyle.GradientAngle = 90;
-            this.sideBarPanelItem5.Icon = ((System.Drawing.Icon)(resources.GetObject("sideBarPanelItem5.Icon")));
-            this.sideBarPanelItem5.Name = "sideBarPanelItem5";
-            this.sideBarPanelItem5.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
-            this.GetTDData,
-            this.获取设备状态,
-            this.DataEmitSet,
-            this.SetDeviceParameter});
-            this.sideBarPanelItem5.Text = "设备命令";
-            // 
-            // GetTDData
-            // 
-            this.GetTDData.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-            this.GetTDData.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top;
-            this.GetTDData.Name = "GetTDData";
-            this.GetTDData.Text = "获取设备数据";
-            this.GetTDData.Tooltip = "索取节点所接设备信息";
-            this.GetTDData.Click += new System.EventHandler(this.GetTDData_Click);
-            // 
-            // 获取设备状态
-            // 
-            this.获取设备状态.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-            this.获取设备状态.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top;
-            this.获取设备状态.Name = "获取设备状态";
-            this.获取设备状态.Text = "获取设备状态";
-            this.获取设备状态.Tooltip = "得到节点上设备的运行状态";
-            this.获取设备状态.Click += new System.EventHandler(this.获取设备状态_Click);
-            // 
-            // DataEmitSet
-            // 
-            this.DataEmitSet.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-            this.DataEmitSet.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top;
-            this.DataEmitSet.Name = "DataEmitSet";
-            this.DataEmitSet.Text = "设备回传设置";
-            this.DataEmitSet.Tooltip = "设定节点所接设备回传时间间隔";
-            this.DataEmitSet.Click += new System.EventHandler(this.DataEmitSet_Click);
-            // 
-            // SetDeviceParameter
-            // 
-            this.SetDeviceParameter.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-            this.SetDeviceParameter.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top;
-            this.SetDeviceParameter.Name = "SetDeviceParameter";
-            this.SetDeviceParameter.Text = "设备参数设置";
-            this.SetDeviceParameter.Tooltip = "透明设置设备参数";
-            this.SetDeviceParameter.Click += new System.EventHandler(this.SetDeviceParameter_Click);
-            // 
-            // panelDockContainer3
-            // 
-            this.panelDockContainer3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2010;
-            this.panelDockContainer3.Controls.Add(this.GpsLog);
-            this.panelDockContainer3.Controls.Add(this.label1);
-            this.panelDockContainer3.Controls.Add(this.speedlabel);
-            this.panelDockContainer3.Controls.Add(this.degreelabel);
-            this.panelDockContainer3.Controls.Add(this.label10);
-            this.panelDockContainer3.Controls.Add(this.tracklabel);
-            this.panelDockContainer3.Controls.Add(this.uselabel);
-            this.panelDockContainer3.Controls.Add(this.label11);
-            this.panelDockContainer3.Controls.Add(this.label12);
-            this.panelDockContainer3.Controls.Add(this.timelabel);
-            this.panelDockContainer3.Controls.Add(this.hgtsdlabel);
-            this.panelDockContainer3.Controls.Add(this.label13);
-            this.panelDockContainer3.Controls.Add(this.label9);
-            this.panelDockContainer3.Controls.Add(this.latsdlabel);
-            this.panelDockContainer3.Controls.Add(this.hgtlabel);
-            this.panelDockContainer3.Controls.Add(this.label6);
-            this.panelDockContainer3.Controls.Add(this.label7);
-            this.panelDockContainer3.Controls.Add(this.lngsdlabel);
-            this.panelDockContainer3.Controls.Add(this.label8);
-            this.panelDockContainer3.Controls.Add(this.poslabel);
-            this.panelDockContainer3.Controls.Add(this.label4);
-            this.panelDockContainer3.Controls.Add(this.sollabel);
-            this.panelDockContainer3.Controls.Add(this.latlabel);
-            this.panelDockContainer3.Controls.Add(this.label5);
-            this.panelDockContainer3.Controls.Add(this.label3);
-            this.panelDockContainer3.Controls.Add(this.label2);
-            this.panelDockContainer3.Controls.Add(this.lnglabel);
-            this.panelDockContainer3.Location = new System.Drawing.Point(3, 23);
-            this.panelDockContainer3.Name = "panelDockContainer3";
-            this.panelDockContainer3.Size = new System.Drawing.Size(129, 421);
-            this.panelDockContainer3.Style.Alignment = System.Drawing.StringAlignment.Center;
-            this.panelDockContainer3.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
-            this.panelDockContainer3.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
-            this.panelDockContainer3.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
-            this.panelDockContainer3.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder;
-            this.panelDockContainer3.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
-            this.panelDockContainer3.Style.GradientAngle = 90;
-            this.panelDockContainer3.TabIndex = 2;
-            // 
             // dockContainerItem4
             // 
             this.dockContainerItem4.Control = this.panelDockContainer1;
@@ -1885,7 +1894,7 @@
             this.自定义地图管理ToolStripMenuItem});
             this.MapContextMenuStrip.Name = "MapContextMenuStrip";
             this.MapContextMenuStrip.ShowCheckMargin = true;
-            this.MapContextMenuStrip.Size = new System.Drawing.Size(204, 472);
+            this.MapContextMenuStrip.Size = new System.Drawing.Size(204, 494);
             // 
             // MapTypeBox
             // 
@@ -2300,15 +2309,6 @@
             this.MainMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseMove);
             this.MainMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainMap_MouseUp);
             // 
-            // SupplyConfig
-            // 
-            this.SupplyConfig.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText;
-            this.SupplyConfig.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top;
-            this.SupplyConfig.Name = "SupplyConfig";
-            this.SupplyConfig.Text = "外电配置";
-            this.SupplyConfig.ThemeAware = true;
-            this.SupplyConfig.Click += new System.EventHandler(this.SupplyConfig_Click);
-            // 
             // MapForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -2362,10 +2362,10 @@
             this.dockSite2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.Sidebar)).EndInit();
             this.Sidebar.ResumeLayout(false);
-            this.panelDockContainer1.ResumeLayout(false);
             this.panelDockContainer5.ResumeLayout(false);
             this.panelDockContainer3.ResumeLayout(false);
             this.panelDockContainer3.PerformLayout();
+            this.panelDockContainer1.ResumeLayout(false);
             this.MapContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 

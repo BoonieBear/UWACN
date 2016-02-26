@@ -40,7 +40,8 @@ namespace WaveBox
         public int _bitsPerSample = 16;
         public int _SampleByte = 2;
         public ArrayList _fftLeftSpect = new ArrayList();
-        
+        private Bitmap canvas;
+        private Bitmap fftcanvas;
         public AudioFrame(int audioSamplesPerSecond,int maxFrequecy, int timedomainlen, int amp, int BitsPerSample)
         {
             SamplesPerSecond = audioSamplesPerSecond;
@@ -50,7 +51,8 @@ namespace WaveBox
             Fmax = maxFrequecy;
             _bitsPerSample = BitsPerSample;
             _SampleByte = _bitsPerSample / 8;
-           
+           canvas = new Bitmap(800, 600);
+           fftcanvas = new Bitmap(800, 600);
         }
 
         /// <summary>
@@ -91,15 +93,16 @@ namespace WaveBox
             if (wave == null)
                 return;
             // Set up for drawing
-            Bitmap canvas = new Bitmap(pictureBox.Width, pictureBox.Height);
+            
             Graphics offScreenDC = Graphics.FromImage(canvas);
-            Pen pen = new System.Drawing.Pen(Color.WhiteSmoke);
-            p = new Point[pictureBox.Width];
+            offScreenDC.Clear(Color.Black);
+            
             // Determine channnel boundries
             int width = canvas.Width;
             int height = canvas.Height;
             double center = height / 2;
-
+            Pen pen = new System.Drawing.Pen(Color.WhiteSmoke);
+            p = new Point[width];
             // Draw left channel
             double scale = 0.5 * height / Ymax;  // a 16 bit sample has values from -32768 to 32767
             //int xPrev = 0, yPrev = 0;
@@ -134,19 +137,19 @@ namespace WaveBox
                 g.Dispose();
                 return;
             }
-            Bitmap canvas = new Bitmap(pictureBox.Width,pictureBox.Height);
-            Graphics offScreenDC = Graphics.FromImage(canvas);
             
-            int width = canvas.Width;
-            int height = canvas.Height;
+            Graphics offScreenDC = Graphics.FromImage(fftcanvas);
+
+            int width = fftcanvas.Width;
+            int height = fftcanvas.Height;
             //offScreenDC.CopyFromScreen(0, 0, 0, 0, new Size(width,height),CopyPixelOperation.SourceCopy);
             Monitor.Enter(_fftLeftSpect);
             int len = _fftLeftSpect.Count;
             //Debug.WriteLine(len, "_fftLeftSpect.Count=");
-            Rectangle destRect = new Rectangle(0, 0, pictureBox.Width - len, pictureBox.Height);
+            Rectangle destRect = new Rectangle(0, 0, width - len, height);
             GraphicsUnit units = GraphicsUnit.Pixel;
-            Rectangle srcRect = new Rectangle(len, 0, pictureBox.Width - len, pictureBox.Height);
-            offScreenDC.DrawImage(pictureBox.Image, destRect,srcRect , units);
+            Rectangle srcRect = new Rectangle(len, 0, width - len, height);
+            offScreenDC.DrawImage(fftcanvas, destRect, srcRect, units);
             double range = 0;
 
             for (int y = 0; y < _fftLeftSpect.Count; y++)
@@ -176,8 +179,8 @@ namespace WaveBox
                 range = max - min;
 
             // lock image
-            PixelFormat format = canvas.PixelFormat;
-            BitmapData data = canvas.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadOnly, format);
+            PixelFormat format = fftcanvas.PixelFormat;
+            BitmapData data = fftcanvas.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadOnly, format);
             int stride = data.Stride;
             int offset = stride - width * 4;
 
@@ -220,11 +223,11 @@ namespace WaveBox
             }
            
             // unlock image
-            canvas.UnlockBits(data);
+            fftcanvas.UnlockBits(data);
             
             // Clean up
-            
-            pictureBox.Image = canvas;
+
+            pictureBox.Image = fftcanvas;
             offScreenDC.Dispose();
             
         }

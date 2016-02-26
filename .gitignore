@@ -1,5 +1,12 @@
 obj/ 
 bin/
 *.cache
+ADplayer/ADplayer/bin/
+ADplayer/ADplayer/obj/
+uwacn_webnode/webnode/obj/
+uwacn_webnode/webnode/bin/
 uwacn_webnode/webnode/obj/Debug/webnode.csproj.FileListAbsolute.txt
 uwacn_webnode/webnode.v12.suo
+WaveBox/WaveBox/bin/
+WaveBox/WaveBox/obj/
+WaveBox/WaveBox/John.UI.csproj
