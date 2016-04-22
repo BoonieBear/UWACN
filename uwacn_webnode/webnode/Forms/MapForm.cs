@@ -2529,7 +2529,22 @@ namespace webnode.Forms
                         case "BESTPOSA":
                             if (GpsHelper.CalculateBlockCRC32(newcomming.Substring(1, newcomming.Length-10)) == gpsinfo[gpsinfo.Length - 1])
                             {
-                                
+                                sollabel.Text = gpsinfo[11];
+                                poslabel.Text = gpsinfo[12];
+                                latlabel.Text = gpsinfo[13];
+                                lnglabel.Text = gpsinfo[14];
+                                hgtlabel.Text = gpsinfo[15];
+                                latsdlabel.Text = gpsinfo[18];
+                                lngsdlabel.Text = gpsinfo[19];
+                                hgtsdlabel.Text = gpsinfo[20];
+                                tracklabel.Text = gpsinfo[24];
+                                uselabel.Text = gpsinfo[25];
+                                EventsClass.lnglatEventArgs ll = new EventsClass.lnglatEventArgs(Double.Parse(gpsinfo[14]), Double.Parse(gpsinfo[13]),bearing);
+                                latlngEventHandler handler = GpslatlngEvent;
+                                if(handler != null)
+                                {
+                                    handler(this,ll);
+                                }
                             }   
                             break;
 
@@ -2783,8 +2798,10 @@ namespace webnode.Forms
                                     WriteCommLog("串口3定时唤醒时间:" + int.Parse(HexStr.Substring(158, 10)) + "秒");
                                     WriteCommLog("单片机重启次数:" + int.Parse(HexStr.Substring(168, 4)));
                                     WriteCommLog("浮标工作状态:" + (HexStr.Substring(172, 2) == "00" ? "休眠" : "工作"));
-                                    WriteCommLog("版本信息:" + (double.Parse(HexStr.Substring(174, 4)) / 1000).ToString("F03") + " " + HexStr.Substring(178, 4) + "年" + HexStr.Substring(182, 2) + "月"
-                                        + HexStr.Substring(184, 2) + "日");
+                                    WriteCommLog("高压电源配置:" + (HexStr.Substring(174, 1) == "0" ? "内电" : "外电"));
+                                    WriteCommLog("低压电源配置:" + (HexStr.Substring(175, 1) == "0" ? "内电" : "外电"));
+                                    WriteCommLog("版本信息:" + (double.Parse(HexStr.Substring(176, 4)) / 1000).ToString("F03") + " " + HexStr.Substring(180, 4) + "年" + HexStr.Substring(184, 2) + "月"
+                                        + HexStr.Substring(186, 2) + "日");
                                     
                                     break;
                                 case 14://版本号。2013年1月14日之后舍弃
