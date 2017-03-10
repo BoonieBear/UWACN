@@ -773,19 +773,15 @@ namespace webnode.Forms
             }
             catch (SocketException MyEx)
             {
-                if (bConnect)
-                {
-                    e.Result = MyEx.ErrorCode;
-                    MainForm.ParseLock.ReleaseMutex();//ParseNetworkPacket中调用了lock
-                    AddtoBox(Color.Black, MyEx.Message + ":" + MyEx.StackTrace.ToString() + "\r\n/>");
-                    bConnect = false;
-                }
-
+                e.Result = MyEx.ErrorCode;
+                MainForm.ParseLock.ReleaseMutex();//ParseNetworkPacket中调用了lock
+                AddtoBox(Color.Black, MyEx.Message + ":" + MyEx.StackTrace.ToString() + "\r\n/>");
+                bConnect = false;
             }
             catch (IOException IOEx)
             {
                 bConnect = false;
-                //AddtoBox(Color.Black,"IO错误!\r\n/>");
+                AddtoBox(Color.Black, "网络连接关闭!\r\n/>");
                 //SendStatusLabel("IO错误！网络连接关闭");
             }
 
