@@ -915,10 +915,10 @@ namespace webnode.Helper
                                         optputdata += "纬度:" + ni.Latitude + "\r\n";
                                         AddtoList("4", "深度", ni.depth.ToString(), ni.Depth);
                                         optputdata += "深度:" + ni.Depth + "\r\n";
-                                        if ((ni.Set2type == 101)||(ni.Set1type == 101))//auv声学定位数据
+                                        if (ni.NodeType == 1) // 移动节点
                                         {
                                             PointLatLng p = new PointLatLng(((double)ni.Lat)/60/10000,((double)ni.Lang)/60/10000);
-                                            MainForm.pMainForm.mapdoc.AddNewNodeToMap("节点" + ni.NodeId.ToString() + "(POS)", p, 1, -1);
+                                            MainForm.pMainForm.mapdoc.AddNewNodeToMap("节点" + ni.NodeId.ToString(), p, 1, -1);
                                         }
                                     }
                                     break;
@@ -1393,7 +1393,7 @@ namespace webnode.Helper
                                                     
                                                     PointLatLng p = new PointLatLng((double)lat/ 10000 / 60,(double)lng/ 10000 / 60);
                                                     if ((p != PointLatLng.Zero) && (p.Lat < 90) && (p.Lat > -90) && (p.Lng < 180) && (p.Lng > -180) )
-                                                        MainForm.pMainForm.mapdoc.AddNewNodeToMap("节点" + StartId.ToString(), p, 1, (float)head / 100);
+                                                        MainForm.pMainForm.mapdoc.AddNewNodeToMap("节点" + StartId.ToString()+ "(AUVPOS)", p, 1, (float)head / 100);
                                                     
                                                     int fanspeed = (GetIntValueFromBit(8) << 8) + GetIntValueFromBit(8);
                                                     if (fanspeed >= 0)

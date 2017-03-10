@@ -876,8 +876,8 @@ namespace webnode.Forms
                 if (HasNode)//已存在节点
                 {
                     MoveNode(nodename, p, direction);
-                    if(direction>=0)//AUV
-                        Ping(nodename, 1000, "AUV");
+                    //if(direction>=0)//AUV
+                    Ping(nodename, 1000, "AUV");
                 }
                 else//新节点
                 {
@@ -893,8 +893,8 @@ namespace webnode.Forms
                         p.Offset(GmapToGpsOffset);
                         newnode.ToolTipText = newnode.Tag.ToString() + "\r\n" + "AUV" + "\r\n" + "{经度=" + p.Lng.ToString("F08", CultureInfo.InvariantCulture) + "，纬度=" + p.Lat.ToString("F08", CultureInfo.InvariantCulture) + "}";
                         WebNodeLayer.Markers.Add(newnode);
-                        if (direction >= 0)//AUV
-                            Ping(nodename, 3000, "AUV");
+                        //if (direction >= 0)//AUV
+                        Ping(nodename, 3000, "AUV");
                     }
                     else//静态
                     {
