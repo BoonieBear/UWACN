@@ -381,14 +381,15 @@ namespace webnode.Forms
                 CommandLineBox.SelectionColor = Color.Black;
                 strcommand = strcommand.Replace(@"/>","");
                 MainForm.pMainForm.mapdoc.WriteNetLog(strcommand);
+                if (NetLogFile.logfile.ws == null)//还未创建文件
+                    NetLogFile.OpenFile(MainForm.pMainForm.RecordInfo);
+                NetLogFile.writeLine("\r\n" + strcommand);
+                if (NetLogFile.length >= 600 * 1024)//不允许大于600K
+                {
+                    NetLogFile.close();
+                }
             }
-            if (NetLogFile.logfile.ws==null)//还未创建文件
-                NetLogFile.OpenFile(MainForm.pMainForm.RecordInfo);
-            NetLogFile.writeLine("\r\n" + strcommand);
-            if (NetLogFile.length >= 600 * 1024)//不允许大于600K
-            {
-                NetLogFile.close();
-            }
+            
         }
         
         #endregion
