@@ -14,6 +14,7 @@ using System.Xml;
 using System.Media;
 using webnode.Helper;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace webnode.Forms
 {
@@ -757,6 +758,16 @@ namespace webnode.Forms
                         int numberOfBytesRead = 0;
                         Dstream.Read(myReadBuffer, 0, 4);//先读包头
                         UInt16 PacketLength = BitConverter.ToUInt16(myReadBuffer, 2);
+                        UInt16 head = BitConverter.ToUInt16(myReadBuffer, 0);
+                        if (PacketLength > 4096)
+                        {
+                            continue;
+                        }
+                        if((head!= 0xABCD)&&(head!= 0xAD01)&&(head!=0xAD02)&& (head != 0xAD03) && (head != 0xAD04)
+                            &&(head != 0xEDED)&& (head != 0xEE01)&&(head != 0xBB01) && (head != 0xACAC) && (head != 0x45FF))
+                        {
+                            continue;
+                        }
                         // Incoming message may be larger than the buffer size.
                         do
                         {
@@ -1034,6 +1045,18 @@ namespace webnode.Forms
                         string filename = NetDataFile.adfile.fileName;
                         NetDataFile.BinaryWrite(data);
                         NetDataFile.close();
+                        try
+                        {
+                            MainForm.ParseLock.WaitOne();
+                            SourceDataClass.GetData(data);
+                            SourceDataClass.Parse();
+                            MainForm.ParseLock.ReleaseMutex();
+                        }
+                        catch (Exception ex)
+                        {
+
+                            MainForm.ParseLock.ReleaseMutex();
+                        }
                         DataEventHandler handler = NetDataEvent;
                         EventsClass.DataEventArgs e = new EventsClass.DataEventArgs(Dclient.Client.RemoteEndPoint.ToString().Split(':')[0], data, length, filename);
                         if (handler != null)

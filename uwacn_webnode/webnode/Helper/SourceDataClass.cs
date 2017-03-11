@@ -487,6 +487,7 @@ namespace webnode.Helper
             SBE37_CTD = 17,
             ZJU_AUV_CTD = 18,
             IOA_ADCP = 19,
+            Sea_Sun = 23,
             ZJU_AUV = 101,
             
         }
@@ -1264,6 +1265,9 @@ namespace webnode.Helper
                                                         break;
                                                 }
                                                 break;
+                                        case 23:
+                                            parseSeaSun(len - 36);//all td/ctd data
+                                            break;
                                             default:
                                                 byte[] b = GetByteValueFromBit(len - 36);
                                                 AddtoList("3", "数据内容", CRCHelper.ConvertCharToHex(b, b.Length), Encoding.Default.GetString(b));//减去头和长度域
@@ -1585,6 +1589,53 @@ namespace webnode.Helper
             return parselist;
 
 
+        }
+        /// <summary>
+        /// parse sea&sun td/ctd data according to the bit length
+        /// </summary>
+        /// <param name="v">bit length</param>
+        private static void parseSeaSun(int v)
+        {
+            //we surpose v= 24*n
+            for(int i=0;i<v/24;i++)
+            {
+                GetIntValueFromBit(1);
+                var v1 = GetIntValueFromBit(7);
+                GetIntValueFromBit(1);
+                var v2 = GetIntValueFromBit(7)<<7;
+                GetIntValueFromBit(1);
+                var v3 = GetIntValueFromBit(2)<<14;
+                var type = GetIntValueFromBit(5);
+                
+                
+                var value = v3  + v2  + v1;
+                string strtype;
+                string data =value.ToString();
+                switch (type)
+                {
+                    case 1://vol
+                        strtype = "电压";
+                        data += "v";
+                        break;
+                    case 2://pre
+                        strtype = "压力";
+                        data += "dbar";
+                        break;
+                    case 3://temp
+                        strtype = "温度";
+                        data += "°C";
+                        break;
+                    case 4://cond
+                        strtype = "电导率";
+                        data += "mS/cm";
+                        break;
+                    default:
+                        strtype = "未知数据类型";
+                        break;
+                }
+                AddtoList("3", strtype, value.ToString(), data.ToString());
+                optputdata += "strtype:" + data.ToString() + "\r\n";
+            }
         }
         #endregion
 
