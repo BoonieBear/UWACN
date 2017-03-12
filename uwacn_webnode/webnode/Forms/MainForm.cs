@@ -33,7 +33,7 @@ namespace webnode
         public static MainForm pMainForm;//主窗口指针
         string MyExecPath = System.IO.Path.GetDirectoryName(
                 System.Reflection.Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName);
-
+        private Mutex gMu;
         //命令列表委托
         private delegate void CmdListNotice();
         private delegate void PositionShow(string str);
@@ -73,6 +73,15 @@ namespace webnode
        
         private void MainForm_Load(object sender, EventArgs e)
         {
+            //检查实例是否重复
+            bool createdNew = false;
+            gMu = new Mutex(true, "Webnode", out createdNew);
+            if (!createdNew)
+            {
+                MessageBox.Show("请不要同时运行两个Webnode实例。", "水声通信网");
+                Environment.Exit(0);
+                return;
+            }
             CreateLogDirectory();
             Commtime.Interval = 1000;
             Commtime.Tick += new EventHandler(Commtime_Tick);
