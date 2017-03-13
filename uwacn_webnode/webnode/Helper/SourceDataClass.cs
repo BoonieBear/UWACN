@@ -1615,18 +1615,22 @@ namespace webnode.Helper
                 {
                     case 1://vol
                         strtype = "电压";
+                        data = (0.0699626+0.0000705936*value).ToString("F06");
                         data += "v";
                         break;
                     case 2://pre
                         strtype = "压力";
+                        data = (-0.0321329 + 0.100741 * value - 0.00000000100912 * value * value - 0.00000000000000783041 * value * value * value).ToString("F06");
                         data += "dbar";
                         break;
                     case 3://temp
                         strtype = "温度";
+                        data = (-2.44917 + 0.000589829 * value).ToString("F06");
                         data += "°C";
                         break;
                     case 4://cond
                         strtype = "电导率";
+                        data = (-0.279926 + 0.00122043 * value+0.000000000133295 * value * value).ToString("F06");
                         data += "mS/cm";
                         break;
                     default:

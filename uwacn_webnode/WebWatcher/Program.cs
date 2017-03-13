@@ -68,6 +68,7 @@ namespace WebWatcher
             if (!File.Exists(exepath + "\\webnode.exe"))
             {
                 Log("找不到水声通信网程序,watcher退出！");
+                return;
             }
             Process.Start(exepath+"\\webnode.exe");
             Log("启动水声通信网程序");
