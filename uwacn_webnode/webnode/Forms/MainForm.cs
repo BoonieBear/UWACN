@@ -52,6 +52,8 @@ namespace webnode
         public DirectoryInfo SerialRecvPathInfo;
         public DirectoryInfo SerialCmdPathInfo;
         public DirectoryInfo NetCmdDataPathInfo;
+        public DirectoryInfo NetRecvTCPPathInfo;
+        public DirectoryInfo NetRecvUDPPathInfo;
         public DirectoryInfo NetRecvDataPathInfo;
         //配置文件
         public string xmldoc = "config.xml";
@@ -224,7 +226,10 @@ namespace webnode
                 Directory.CreateDirectory(NetRecvDatapath);
                 NetRecvDatapath = NetRecvDatapath + "\\" + "RecvData";
                 NetRecvDataPathInfo = Directory.CreateDirectory(NetRecvDatapath);
-
+                string NetRecvTCPDatapath = NetRecvDatapath + "\\" + "TCP";
+                NetRecvTCPPathInfo = Directory.CreateDirectory(NetRecvTCPDatapath);
+                string NetRecvUDPDatapath = NetRecvDatapath + "\\" + "UDP";
+                NetRecvUDPPathInfo = Directory.CreateDirectory(NetRecvUDPDatapath);
 
                 string NetCmdPath = LogPath + "\\" + "ACN_Net";
                 NetCmdPath = NetCmdPath + "\\" + "CmdData";

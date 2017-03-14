@@ -22,7 +22,7 @@ namespace webnode.Forms
     public partial class CommLineForm : Office2007Form
     {
         //负责与节点交换数据
-        public TcpClient Tclient,Dclient;
+        public TcpClient Tclient,Dclient,HbClient;
         public NetworkStream Tstream, Dstream;
         public static bool bConnect;
         public bool hasRecv = false;
@@ -37,7 +37,8 @@ namespace webnode.Forms
         public AdFile ch3AdFile = new AdFile("Ch3AD");
         public AdFile ch4AdFile = new AdFile("Ch4AD");
         public AdFile WaveFile = new AdFile("BaseWave");
-        public AdFile NetDataFile = new AdFile("NetRecvData");
+        public AdFile NetTCPFile = new AdFile("NetTCPData");
+        public AdFile NetUDPFile = new AdFile("NetUDPData");
         public AdFile NetCmdFile = new AdFile("NetCmdData");
         static LogFile NetLogFile = new LogFile("NetTextLog");
 
@@ -1041,10 +1042,10 @@ namespace webnode.Forms
 
                 case 0xEE01:
                     {
-                        NetDataFile.OpenFile(MainForm.pMainForm.NetRecvDataPathInfo);
-                        string filename = NetDataFile.adfile.fileName;
-                        NetDataFile.BinaryWrite(data);
-                        NetDataFile.close();
+                        NetTCPFile.OpenFile(MainForm.pMainForm.NetRecvTCPPathInfo);
+                        string filename = NetTCPFile.adfile.fileName;
+                        NetTCPFile.BinaryWrite(data);
+                        NetTCPFile.close();
                         try
                         {
                             MainForm.ParseLock.WaitOne();
@@ -1169,7 +1170,8 @@ namespace webnode.Forms
             ch3AdFile.close();
             ch4AdFile.close();
             WaveFile.close();
-            NetDataFile.close();
+            NetTCPFile.close();
+            NetUDPFile.close();
             NetLogFile.close();
         }
 

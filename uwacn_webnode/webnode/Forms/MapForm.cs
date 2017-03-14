@@ -493,10 +493,10 @@ namespace webnode.Forms
                     }
                     byte[] data = new byte[PacketLength];
                     Array.Copy(buffer, data, PacketLength);
-                    MainForm.pMainForm.CommandLineWin.NetDataFile.OpenFile(MainForm.pMainForm.NetRecvDataPathInfo);
-                    string filename = MainForm.pMainForm.CommandLineWin.NetDataFile.adfile.fileName;
-                    MainForm.pMainForm.CommandLineWin.NetDataFile.BinaryWrite(data);
-                    MainForm.pMainForm.CommandLineWin.NetDataFile.close();
+                    MainForm.pMainForm.CommandLineWin.NetUDPFile.OpenFile(MainForm.pMainForm.NetRecvUDPPathInfo);
+                    string filename = MainForm.pMainForm.CommandLineWin.NetUDPFile.adfile.fileName;
+                    MainForm.pMainForm.CommandLineWin.NetUDPFile.BinaryWrite(data);
+                    MainForm.pMainForm.CommandLineWin.NetUDPFile.close();
                     try
                     {
                         MainForm.ParseLock.WaitOne();

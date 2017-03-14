@@ -1620,7 +1620,7 @@ namespace webnode.Helper
                         break;
                     case 2://pre
                         strtype = "压力";
-                        data = (-0.0321329 + 0.100741 * value - 0.00000000100912 * value * value - 0.00000000000000783041 * value * value * value).ToString("F06");
+                        data = (-321.329 + 0.100741 * value - 0.00000000100912 * value * value - 0.00000000000000783041 * value * value * value).ToString("F06");
                         data += "dbar";
                         break;
                     case 3://temp
