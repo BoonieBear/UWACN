@@ -7,6 +7,8 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Net.Sockets;
+using System.Net;
 
 namespace WebWatcher
 {
@@ -14,6 +16,28 @@ namespace WebWatcher
     {
         static LogFile LogFile = new LogFile("WatcherLog");
         static private Mutex gMu;
+        static private int food = 2;
+        static private System.Threading.Timer Feeder;
+        static private System.Threading.Timer Cleaner;
+        private static void FeedTimeOut(object state)
+        {
+            if (food < 0)
+            {
+                Log("时间到，重启水声通信网程序");
+
+                stopProcess("webnode");
+                Process.Start(exepath + "\\webnode.exe");
+                food = 2;
+            }
+            Debug.WriteLine("food = {0}",food.ToString());
+        }
+        private static void CleanTimeOut(object state)
+        {
+            Interlocked.Decrement(ref food);
+            Debug.WriteLine("food = {0}", food.ToString());
+        }
+        static private NetworkStream streams;
+        static private TcpListener dog;
         static DirectoryInfo exepath = new DirectoryInfo(System.IO.Path.GetDirectoryName(
                 System.Reflection.Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName));
         static void Log(string msg)
@@ -72,8 +96,52 @@ namespace WebWatcher
             }
             Process.Start(exepath+"\\webnode.exe");
             Log("启动水声通信网程序");
+            Feeder = new System.Threading.Timer(FeedTimeOut, null, 5000, 3000);
+            Cleaner = new System.Threading.Timer(CleanTimeOut, null, 6000, 3000);
             //start listenning
-            //TBD
+            dog = new TcpListener(IPAddress.Any,32100);
+            dog.Start();
+            Log("开始监听");
+            // 后台线程1：用于接收tcp连接请求，并将网络流加入列表。随主线程的退出而退出。
+            new Thread(() =>
+            {
+                while (true)
+                {
+                    Thread.Sleep(100);// 可以根据需要设置时间
+                    if (!dog.Pending())
+                    {
+                        continue;
+                    }
+                    var client = dog.AcceptTcpClient();
+
+                    if (!client.Connected)
+                    {
+                        continue;
+                    }
+                    streams = client.GetStream();
+                }
+            })
+            { IsBackground = true }.Start();
+
+            // 后台线程2：用于接收请求，并作出响应。随主线程的退出而退出。
+            new Thread(() =>
+            {
+                while (true)
+                {
+                    Thread.Sleep(100);// 可以根据需要设置时间
+                    if (streams == null || !streams.CanRead)
+                    {
+                        continue;
+                    }
+                    var buffer = new byte[2];
+                    var a = streams.Read(buffer, 0, buffer.Length);
+                    if (BitConverter.ToUInt16(buffer, 0) == 0xFE01)
+                    {
+                        Interlocked.Increment(ref food);
+                    }
+                }
+            })
+            { IsBackground = true }.Start();
             //
             Console.ReadLine();
         }
