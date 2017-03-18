@@ -617,10 +617,10 @@ namespace webnode.Forms
             }
             try
             {
-                //string[] portstr = { "吊放配置", "网络配置", "端口号" };
-                //int port = Int16.Parse(XmlHelper.GetConfigValue(xmldoc, portstr));
+                string[] portstr = { "命令端口" };
+                int port = Int16.Parse(XmlHelper.GetConfigValue(xmldoc, portstr));
                 AddtoBox(Color.Black,"连接命令端口……\r\n");
-                Tclient.BeginConnect(ipaddr, 8080,new AsyncCallback(ConnnectCallBack), Tclient);
+                Tclient.BeginConnect(ipaddr, port, new AsyncCallback(ConnnectCallBack), Tclient);
                 while (true)
                 {
                     Thread.Sleep(50);
@@ -655,7 +655,9 @@ namespace webnode.Forms
             try
             {
                 AddtoBox(Color.Black, "数据命令端口……\r\n");
-                Dclient.BeginConnect(ipaddr, 8081, new AsyncCallback(ConnnectCallBack), Dclient);
+                string[] portstr = { "数据端口" };
+                int port = Int16.Parse(XmlHelper.GetConfigValue(xmldoc, portstr));
+                Dclient.BeginConnect(ipaddr, port, new AsyncCallback(ConnnectCallBack), Dclient);
                 while (true)
                 {
                     Thread.Sleep(50);

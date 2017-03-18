@@ -113,7 +113,7 @@ namespace webnode.Forms
                     MapForm.MspSerialPort.BaudRate = int.Parse(XmlHelper.GetConfigValue(xmldoc, newstr));
                     if (MapForm.MspSerialPort.PortName == null)
                         MessageBox.Show("读取MSP430端口错误！");
-                    MainForm.pMainForm.mapdoc.MSP_StartWork();
+                    MainForm.pMainForm.mapdoc.MSP_StartWork(); 
                 }
                 catch
                 { }

@@ -123,6 +123,12 @@
     <Compile Include="Forms\ADShowForm.Designer.cs">
       <DependentUpon>ADShowForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\AutoConnect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AutoConnect.Designer.cs">
+      <DependentUpon>AutoConnect.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\BasicConfForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -309,6 +315,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ADShowForm.resx">
       <DependentUpon>ADShowForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AutoConnect.resx">
+      <DependentUpon>AutoConnect.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\BasicConfForm.resx">
       <DependentUpon>BasicConfForm.cs</DependentUpon>
