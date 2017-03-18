@@ -97,7 +97,7 @@ namespace webnode
             ADform.ShowInTaskbar = false;
             BuoyChoice.SelectedIndex = 0;
             WebnodeComm.SelectedIndex = 0;
-
+            
             CommandLineWin.WindowState = FormWindowState.Minimized;
             CommandLineWin.Show();
             comlistwin.WindowState = FormWindowState.Minimized;

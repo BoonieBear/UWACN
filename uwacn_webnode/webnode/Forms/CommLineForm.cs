@@ -46,9 +46,9 @@ namespace webnode.Forms
         //SoundPlayer AdPlayer = new SoundPlayer();
         public static int ADchannel=0;//AD显示通道号
         public EventWaitHandle ACPacketHandle;//AC响应包同步事件句柄
-        
+        public AutoConnect AutoConnectWin = new AutoConnect();
         #region 事件委托和响应
-        
+
         /// <summary>
         /// 用于子窗口操作父窗控件
         /// </summary>
@@ -135,6 +135,24 @@ namespace webnode.Forms
 //            this.WaveDisplEvent += new WaveEventHandler(MainForm.pMainForm.mapdoc.DispWave);
             this.NetDataEvent += new DataEventHandler(MainForm.pMainForm.mapdoc.InsertNetList);
             this.ADDataEvent += new ADEventHandler(CommLineForm_ADDataEvent);
+            AutoConnectWin.WindowState = FormWindowState.Minimized;
+            AutoConnectWin.Show();
+            AutoConnectWin.ShowInTaskbar = false;
+            string[] str = { "吊放IP" };
+            IPAddress addr = new IPAddress(0x1234);
+            if(IPAddress.TryParse(XmlHelper.GetConfigValue(xmldoc, str), out addr))
+            {
+                AutoConnectWin.WindowState = FormWindowState.Normal;
+                AutoConnectWin.Show();
+                AutoConnectWin.BringToFront();
+                ConnectNode(addr);
+            }
+            else
+            {
+                MessageBox.Show("无法解析配置中IP地址！请修改吊放IP");
+            }
+            
+            
         }
        
         private void CommLineForm_ADDataEvent(object sender, EventsClass.DataEventArgs e)
@@ -615,12 +633,30 @@ namespace webnode.Forms
             {
                 e.Cancel = true;
             }
+            string[] cportstr = { "命令端口" };
+            int cport = Int16.Parse(XmlHelper.GetConfigValue(xmldoc, cportstr));
+            string[] dportstr = { "数据端口" };
+            int dport = Int16.Parse(XmlHelper.GetConfigValue(xmldoc, dportstr));
+            if (AutoConnectWin.WindowState == FormWindowState.Normal)
+            {
+                this.Invoke(new Action<int>((i) =>
+                {
+                    AutoConnectWin.MsgBox.AppendText("开始连接吊放节点\r\n");
+                    AutoConnectWin.MsgBox.ScrollToCaret();
+                    AutoConnectWin.IpaddBox.Text = ipaddr.ToString();
+                    AutoConnectWin.CommportBox.Text = cport.ToString();
+                    AutoConnectWin.ConnectBtn.Enabled = false;
+                    AutoConnectWin.DisconnectBtn.Enabled = true;
+        
+                }));
+                
+            }
             try
             {
-                string[] portstr = { "命令端口" };
-                int port = Int16.Parse(XmlHelper.GetConfigValue(xmldoc, portstr));
+                
                 AddtoBox(Color.Black,"连接命令端口……\r\n");
-                Tclient.BeginConnect(ipaddr, port, new AsyncCallback(ConnnectCallBack), Tclient);
+                
+                Tclient.BeginConnect(ipaddr, cport, new AsyncCallback(ConnnectCallBack), Tclient);
                 while (true)
                 {
                     Thread.Sleep(50);
@@ -630,7 +666,14 @@ namespace webnode.Forms
                         {
                             Tstream = Tclient.GetStream();
                             AddtoBox(Color.Black, "命令端口已连接。\r\n");
-                            break;
+                            if (AutoConnectWin.WindowState == FormWindowState.Normal)
+                            {
+                                this.Invoke(new Action<int>((i) =>
+                                {
+                                    AutoConnectWin.MsgBox.AppendText("命令端口已连接。\r\n");
+                                }));
+                            }
+                                break;
                         }
                     }
                     else
@@ -649,15 +692,21 @@ namespace webnode.Forms
                 e.Result = myEx.ErrorCode;
                 bConnect = false;
                 AddtoBox(Color.Black, "命令端口连接失败。\r\n");
+                if (AutoConnectWin.WindowState == FormWindowState.Normal)
+                {
+                    this.Invoke(new Action<int>((i) =>
+                    {
+                        AutoConnectWin.MsgBox.AppendText("命令端口连接失败。\r\n");
+                    }));
+                }
                 return;
 
             }
             try
             {
                 AddtoBox(Color.Black, "数据命令端口……\r\n");
-                string[] portstr = { "数据端口" };
-                int port = Int16.Parse(XmlHelper.GetConfigValue(xmldoc, portstr));
-                Dclient.BeginConnect(ipaddr, port, new AsyncCallback(ConnnectCallBack), Dclient);
+                
+                Dclient.BeginConnect(ipaddr, dport, new AsyncCallback(ConnnectCallBack), Dclient);
                 while (true)
                 {
                     Thread.Sleep(50);
@@ -666,7 +715,17 @@ namespace webnode.Forms
                         if ((Dclient.Client != null) && (Dclient.Connected == true))
                         {
                             Dstream = Dclient.GetStream();
-                            AddtoBox(Color.Black, "命令端口已连接。\r\n");
+                            AddtoBox(Color.Black, "数据端口已连接。\r\n");
+                            if (AutoConnectWin.WindowState == FormWindowState.Normal)
+                            {
+                                this.Invoke(new Action<int>((i) =>
+                                {
+                                    AutoConnectWin.MsgBox.AppendText("数据端口已连接。\r\n");
+                                    AutoConnectWin.ConnectBtn.Enabled = false;
+                                    AutoConnectWin.DisconnectBtn.Enabled = true;
+                                }));
+
+                            }
                             break;
                         }
                     }
@@ -677,13 +736,20 @@ namespace webnode.Forms
                     }
                 }  
                 bConnect = true;
-                AddtoBox(Color.Black, "数据端口已连接。\r\n");
+                //AddtoBox(Color.Black, "数据端口已连接。\r\n");
             }
             catch (SocketException myEx)
             {
                 e.Result = myEx.ErrorCode;
                 bConnect = false;
                 AddtoBox(Color.Black, "数据端口连接失败。\r\n");
+                if (AutoConnectWin.WindowState == FormWindowState.Normal)
+                {
+                    this.Invoke(new Action<int>((i) =>
+                    {
+                        AutoConnectWin.MsgBox.AppendText("数据端口连接失败。\r\n");
+                    }));
+                }
                 return;
             }
 
@@ -701,6 +767,16 @@ namespace webnode.Forms
             {
                 ConnNodeBtn.Text = "连接节点";
                 string errstring = "操作已被取消！";
+                if (AutoConnectWin.WindowState == FormWindowState.Normal)
+                {
+                    this.Invoke(new Action<int>((i) =>
+                    {
+                        AutoConnectWin.MsgBox.AppendText("操作已被取消。\r\n");
+                        AutoConnectWin.ConnectBtn.Enabled = true;
+                        AutoConnectWin.DisconnectBtn.Enabled = false;
+                    }));
+
+                }
                 SendStatusLabel(errstring);
                 AddtoBox(Color.Black, errstring + "\r\n");
                 bConnect = false;
@@ -714,6 +790,16 @@ namespace webnode.Forms
                 string errstring = " 操作失败！" + "错误号：" + e.Result.ToString();
                 SendStatusLabel(errstring);
                 AddtoBox(Color.Black, errstring + "\r\n");
+                if (AutoConnectWin.WindowState == FormWindowState.Normal)
+                {
+                    this.Invoke(new Action<int>((i) =>
+                    {
+                        AutoConnectWin.MsgBox.AppendText(errstring + "\r\n");
+                        AutoConnectWin.ConnectBtn.Enabled = true;
+                        AutoConnectWin.DisconnectBtn.Enabled = false;
+                    }));
+
+                }
                 bConnect = false;
                 Tclient.Close();
                 Dclient.Close();
@@ -725,6 +811,17 @@ namespace webnode.Forms
                 ConnNodeBtn.Text = "断开连接";
                 SendStatusLabel("已连接节点");
                 AddtoBox(Color.Black, "已连接节点\r\n");
+                if (AutoConnectWin.WindowState == FormWindowState.Normal)
+                {
+                    this.Invoke(new Action<int>((i) =>
+                    {
+                        AutoConnectWin.MsgBox.AppendText("已连接节点。\r\n");
+                        AutoConnectWin.ConnectBtn.Enabled = false;
+                        AutoConnectWin.DisconnectBtn.Enabled = true;
+                        AutoConnectWin.WindowState = FormWindowState.Minimized;
+                    }));
+
+                }
                 if (Tclient.Connected)
                 {
                     networkdata data = new networkdata();

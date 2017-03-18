@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.MsgBox = new System.Windows.Forms.TextBox();
             this.ConnectBtn = new System.Windows.Forms.Button();
             this.DisconnectBtn = new System.Windows.Forms.Button();
             this.IpaddBox = new System.Windows.Forms.TextBox();
@@ -39,13 +39,13 @@
             this.DataportBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // textBox1
+            // MsgBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 12);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(275, 191);
-            this.textBox1.TabIndex = 0;
+            this.MsgBox.Location = new System.Drawing.Point(12, 12);
+            this.MsgBox.Multiline = true;
+            this.MsgBox.Name = "MsgBox";
+            this.MsgBox.Size = new System.Drawing.Size(275, 191);
+            this.MsgBox.TabIndex = 0;
             // 
             // ConnectBtn
             // 
@@ -118,7 +118,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(444, 216);
-            this.ControlBox = false;
             this.Controls.Add(this.DataportBox);
             this.Controls.Add(this.CommportBox);
             this.Controls.Add(this.label3);
@@ -127,7 +126,7 @@
             this.Controls.Add(this.IpaddBox);
             this.Controls.Add(this.DisconnectBtn);
             this.Controls.Add(this.ConnectBtn);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.MsgBox);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AutoConnect";
@@ -140,8 +139,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -150,5 +147,6 @@
         public System.Windows.Forms.TextBox IpaddBox;
         public System.Windows.Forms.TextBox CommportBox;
         public System.Windows.Forms.TextBox DataportBox;
+        public System.Windows.Forms.TextBox MsgBox;
     }
 }
