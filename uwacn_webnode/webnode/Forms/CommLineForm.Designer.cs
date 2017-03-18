@@ -201,7 +201,7 @@
         private DevComponents.DotNetBar.Bar Menubar;
         private DevComponents.DotNetBar.PanelEx panelEx1;
         private System.Windows.Forms.RichTextBox CommandLineBox;
-        private System.ComponentModel.BackgroundWorker NodeLinker;
+        public System.ComponentModel.BackgroundWorker NodeLinker;
         private System.ComponentModel.BackgroundWorker NodeReceiver;
         private System.Windows.Forms.ContextMenuStrip BoxMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem ClearCommandLine;

@@ -55,6 +55,7 @@
             this.ConnectBtn.TabIndex = 2;
             this.ConnectBtn.Text = "重新连接";
             this.ConnectBtn.UseVisualStyleBackColor = true;
+            this.ConnectBtn.Click += new System.EventHandler(this.ConnectBtn_Click);
             // 
             // DisconnectBtn
             // 
@@ -64,6 +65,7 @@
             this.DisconnectBtn.TabIndex = 3;
             this.DisconnectBtn.Text = "断开连接";
             this.DisconnectBtn.UseVisualStyleBackColor = true;
+            this.DisconnectBtn.Click += new System.EventHandler(this.DisconnectBtn_Click);
             // 
             // IpaddBox
             // 
@@ -133,6 +135,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "自动网络连接";
             this.TopMost = true;
+            this.Load += new System.EventHandler(this.AutoConnect_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

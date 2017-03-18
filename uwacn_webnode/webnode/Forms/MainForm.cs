@@ -42,6 +42,7 @@ namespace webnode
         //数据解析锁
         public static Mutex ParseLock = new Mutex();
         //常驻窗体
+        public AutoConnect AutoConnectWin = new AutoConnect();
         public CommLineForm CommandLineWin = new CommLineForm();
         public ADShowForm ADform = new ADShowForm();
         public MapForm mapdoc = new MapForm();
@@ -102,6 +103,7 @@ namespace webnode
             CommandLineWin.Show();
             comlistwin.WindowState = FormWindowState.Minimized;
             comlistwin.Show();
+            
             xmldoc = MyExecPath + "\\" + xmldoc;
             string[] str = { "GPS配置", "串口参数", "端口号" };
             mapdoc.comm = XmlHelper.GetConfigValue(xmldoc, str);
@@ -123,8 +125,10 @@ namespace webnode
                 currentInterface = networkInterfaces[0];
                 NicInfotimer.Enabled = true;
             }
-//            CommandLineWin.Hide();
-            
+            AutoConnectWin.WindowState = FormWindowState.Normal;
+            AutoConnectWin.Show();
+            AutoConnectWin.ShowInTaskbar = false;
+
         }
 
         #region 网络速度测试
