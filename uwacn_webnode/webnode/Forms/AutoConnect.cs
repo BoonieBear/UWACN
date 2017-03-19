@@ -14,6 +14,7 @@ namespace webnode.Forms
     {
         string MyExecPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName);
         string xmldoc;
+        delegate void AddBoxCallback(string s);
         public AutoConnect()
         {
             InitializeComponent();
@@ -45,7 +46,18 @@ namespace webnode.Forms
                 MessageBox.Show("无法解析配置中IP地址！请修改吊放IP");
             }
         }
-
+        private void AddToBox(string s)
+        {
+            if(MsgBox.InvokeRequired)
+            {
+                AddBoxCallback d = new AddBoxCallback(AddToBox);
+                this.Invoke(d, new object[] { s });
+            }
+            else
+            {
+                MsgBox.AppendText(s);
+            }
+        }
         private void DisconnectBtn_Click(object sender, EventArgs e)
         {
             MainForm.pMainForm.CommandLineWin.NodeLinker.CancelAsync();
