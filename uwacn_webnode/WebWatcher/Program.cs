@@ -16,26 +16,23 @@ namespace WebWatcher
     {
         static LogFile LogFile = new LogFile("WatcherLog");
         static private Mutex gMu;
-        static private int food = 2;
+        static private DateTime Tip;
         static private System.Threading.Timer Feeder;
         static private System.Threading.Timer Cleaner;
         private static void FeedTimeOut(object state)
         {
-            if (food < 0)
+            if (DateTime.Now.Subtract(Tip).TotalSeconds >10)
             {
                 Log("时间到，重启水声通信网程序");
 
                 stopProcess("webnode");
                 Process.Start(exepath + "\\webnode.exe");
-                food = 2;
+                Log("启动水声通信网程序");
+                Tip = DateTime.Now.AddSeconds(5);
             }
-            Debug.WriteLine("food = {0}",food.ToString());
+            Debug.WriteLine("DateTime.Now.Subtract(Tip).TotalSeconds=", DateTime.Now.Subtract(Tip).TotalSeconds.ToString());
         }
-        private static void CleanTimeOut(object state)
-        {
-            Interlocked.Decrement(ref food);
-            Debug.WriteLine("food = {0}", food.ToString());
-        }
+
         static private NetworkStream streams;
         static private TcpListener dog;
         static DirectoryInfo exepath = new DirectoryInfo(System.IO.Path.GetDirectoryName(
@@ -81,7 +78,7 @@ namespace WebWatcher
                 //Environment.Exit(0);
                 return;
             }
-            Log("Webnode watcher start!!");
+            Log("Watcher启动!!");
             foreach (Process p in System.Diagnostics.Process.GetProcessesByName("webnode"))
             {
                 MessageBox.Show("请先关闭水声通信网程序再开启Webwatcher。", "watcher");
@@ -97,7 +94,7 @@ namespace WebWatcher
             Process.Start(exepath+"\\webnode.exe");
             Log("启动水声通信网程序");
             Feeder = new System.Threading.Timer(FeedTimeOut, null, 5000, 3000);
-            Cleaner = new System.Threading.Timer(CleanTimeOut, null, 6000, 3000);
+            Tip = DateTime.Now.AddSeconds(3);
             //start listenning
             dog = new TcpListener(IPAddress.Any,32100);
             dog.Start();
@@ -134,10 +131,18 @@ namespace WebWatcher
                         continue;
                     }
                     var buffer = new byte[2];
-                    var a = streams.Read(buffer, 0, buffer.Length);
+                    try
+                    {
+                        var a = streams.Read(buffer, 0, buffer.Length);
+                    }
+                    catch(Exception e)
+                    {
+                        streams.Close();
+                    }
+                    
                     if (BitConverter.ToUInt16(buffer, 0) == 0xFE01)
                     {
-                        Interlocked.Increment(ref food);
+                        Tip = DateTime.Now;
                     }
                 }
             })

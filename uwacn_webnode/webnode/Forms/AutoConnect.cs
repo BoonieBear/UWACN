@@ -108,7 +108,7 @@ namespace webnode.Forms
             else
             {
                 ConnectBtn.Enabled = true;
-                DisconnectBtn.Enabled = false;
+                DisconnectBtn.Enabled = true;
             }
         }
     }

@@ -25,7 +25,6 @@ namespace webnode.Forms
         public TcpClient Tclient,Dclient,HbClient;
         public NetworkStream Tstream, Dstream, Hbstream;
         public static bool bConnect;
-        public static int tick = 1;
         public bool hasRecv = false;
         string MyExecPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName);
         string xmldoc;
@@ -565,38 +564,40 @@ namespace webnode.Forms
         public void ConnectNode(IPAddress Nodeip)
         {
            
-                try
-                {
-                    //string[] ip = { "吊放配置", "网络配置", "节点IP" };
-                    //IPAddress Nodeip = IPAddress.Parse(XmlHelper.GetConfigValue(xmldoc, ip));
-                    Tclient = new TcpClient();//每次close后都要重写new一个新的对象，因为close后源对象已释放
+            try
+            {
+                //string[] ip = { "吊放配置", "网络配置", "节点IP" };
+                //IPAddress Nodeip = IPAddress.Parse(XmlHelper.GetConfigValue(xmldoc, ip));
+                Tclient = new TcpClient();//每次close后都要重写new一个新的对象，因为close后源对象已释放
 
-                    //Tclient.ReceiveTimeout = 5000;
-                    Tclient.SendTimeout = 1000;
-                    Dclient = new TcpClient();//每次close后都要重写new一个新的对象，因为close后源对象已释放
-                    //Dclient.ReceiveTimeout = 5000;
-                    Dclient.SendTimeout = 1000;
-                    if (NodeLinker.IsBusy)
-                    {
+                //Tclient.ReceiveTimeout = 5000;
+                Tclient.SendTimeout = 1000;
+                Dclient = new TcpClient();//每次close后都要重写new一个新的对象，因为close后源对象已释放
+                //Dclient.ReceiveTimeout = 5000;
+                Dclient.SendTimeout = 1000;
+                HbClient = new TcpClient();
+                HbClient.SendTimeout = 1000;
+            if (NodeLinker.IsBusy)
+                {
                        
-                        NodeLinker.CancelAsync();
-                        Thread.Sleep(300);
+                    NodeLinker.CancelAsync();
+                    Thread.Sleep(300);
                             
-                    }
+                }
                     
-                    NodeLinker.RunWorkerAsync(Nodeip);
-                    SendStatusLabel("连接节点中……");
-                    AddtoBox(Color.Black, "连接节点中……\n");
-                    ConnNodeBtn.Text = "取消连接";
-                }
+                NodeLinker.RunWorkerAsync(Nodeip);
+                SendStatusLabel("连接节点中……");
+                AddtoBox(Color.Black, "连接节点中……\n");
+                ConnNodeBtn.Text = "取消连接";
+            }
 
-                catch (Exception MyEx)
-                {
+            catch (Exception MyEx)
+            {
 
-                    SendStatusLabel(MyEx.Message);
-                    AddtoBox(Color.Black, MyEx.Message + ":" + MyEx.StackTrace + "\r\n/>");
-                    ConnNodeBtn.Text = "连接节点";
-                }
+                SendStatusLabel(MyEx.Message);
+                AddtoBox(Color.Black, MyEx.Message + ":" + MyEx.StackTrace + "\r\n/>");
+                ConnNodeBtn.Text = "连接节点";
+            }
 
 
         }
@@ -619,6 +620,7 @@ namespace webnode.Forms
             {
                 e.Cancel = true;
             }
+            
             string[] cportstr = { "命令端口" };
             int cport = Int16.Parse(XmlHelper.GetConfigValue(xmldoc, cportstr));
             string[] dportstr = { "数据端口" };
@@ -693,8 +695,7 @@ namespace webnode.Forms
                 AddtoBox(Color.Black, "数据端口连接失败。\r\n");
                 return;
             }
-
-            HbClient.BeginConnect(IPAddress.Parse("127.0.0.1"), 32100, new AsyncCallback(ConnnectCallBack), Dclient);
+            HbClient.BeginConnect(IPAddress.Parse("127.0.0.1"), 32100, new AsyncCallback(ConnnectCallBack), HbClient);
             while (true)
             {
                 Thread.Sleep(50);
@@ -713,6 +714,7 @@ namespace webnode.Forms
                     return;
                 }
             }
+
 
         }
         private void NodeLinker_DoWork(object sender, DoWorkEventArgs e)
@@ -1189,15 +1191,18 @@ namespace webnode.Forms
             int heigth = this.Height;
             UtilityClass.hide_show(this, ref heigth, timer1);
             
-            if (HbClient.Connected&&Hbstream!=null)
+            if (HbClient!=null&&HbClient.Client!=null&&HbClient.Connected&&Hbstream!=null)
             {
-                tick++;
-                if (tick%30==0)
+                var command = BitConverter.GetBytes(0xFE01);
+                try
                 {
-                    tick = 0;
-                    var command = BitConverter.GetBytes(0xFE01);
                     Hbstream.Write(command, 0, command.Length);
                 }
+                catch(Exception)
+                {
+                    HbClient.Close();
+                }
+                
             }
 
         }
