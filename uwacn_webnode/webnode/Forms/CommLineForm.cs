@@ -23,8 +23,9 @@ namespace webnode.Forms
     {
         //负责与节点交换数据
         public TcpClient Tclient,Dclient,HbClient;
-        public NetworkStream Tstream, Dstream;
+        public NetworkStream Tstream, Dstream, Hbstream;
         public static bool bConnect;
+        public static int tick = 1;
         public bool hasRecv = false;
         string MyExecPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName);
         string xmldoc;
@@ -46,7 +47,7 @@ namespace webnode.Forms
         //SoundPlayer AdPlayer = new SoundPlayer();
         public static int ADchannel=0;//AD显示通道号
         public EventWaitHandle ACPacketHandle;//AC响应包同步事件句柄
-        
+
         #region 事件委托和响应
 
         /// <summary>
@@ -75,7 +76,7 @@ namespace webnode.Forms
                 
                 if (Tclient == null || Dclient ==null)
                     return;
-                if (Tclient.Client!=null)
+                if (Tclient.Client != null)
                 {
                     if (Tclient.Connected)
                     {
@@ -391,6 +392,8 @@ namespace webnode.Forms
                 {
                     NetLogFile.close();
                 }
+                if(MainForm.pMainForm.AutoConnectWin.Visible)
+                    MainForm.pMainForm.AutoConnectWin.AddToBox(strcommand);
             }
             
         }
@@ -689,6 +692,26 @@ namespace webnode.Forms
                 bConnect = false;
                 AddtoBox(Color.Black, "数据端口连接失败。\r\n");
                 return;
+            }
+
+            HbClient.BeginConnect(IPAddress.Parse("127.0.0.1"), 32100, new AsyncCallback(ConnnectCallBack), Dclient);
+            while (true)
+            {
+                Thread.Sleep(50);
+                if (MyWorker.CancellationPending == false)
+                {
+                    if ((HbClient.Client != null) && (HbClient.Connected == true))
+                    {
+                        Hbstream = HbClient.GetStream();
+                        AddtoBox(Color.Black, "HB端口已连接。\r\n");
+                        break;
+                    }
+                }
+                else
+                {
+                    //e.Cancel = true;
+                    return;
+                }
             }
 
         }
@@ -1166,6 +1189,17 @@ namespace webnode.Forms
             int heigth = this.Height;
             UtilityClass.hide_show(this, ref heigth, timer1);
             
+            if (HbClient.Connected&&Hbstream!=null)
+            {
+                tick++;
+                if (tick%30==0)
+                {
+                    tick = 0;
+                    var command = BitConverter.GetBytes(0xFE01);
+                    Hbstream.Write(command, 0, command.Length);
+                }
+            }
+
         }
 
         private void CommLineForm_FormClosed(object sender, FormClosedEventArgs e)

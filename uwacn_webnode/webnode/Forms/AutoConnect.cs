@@ -15,15 +15,14 @@ namespace webnode.Forms
         string MyExecPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName);
         string xmldoc;
         delegate void AddBoxCallback(string s);
+        
         public AutoConnect()
         {
             InitializeComponent();
             xmldoc = MyExecPath + "\\" + "config.xml";
         }
-
-        private void AutoConnect_Load(object sender, EventArgs e)
+        private void LoadAndConnect()
         {
-
             string[] str = { "吊放IP" };
             IPAddress addr = new IPAddress(0x1234);
             string[] cportstr = { "命令端口" };
@@ -43,10 +42,17 @@ namespace webnode.Forms
             }
             else
             {
+                ConnectBtn.Enabled = true;
+                DisconnectBtn.Enabled = false;
                 MessageBox.Show("无法解析配置中IP地址！请修改吊放IP");
             }
         }
-        private void AddToBox(string s)
+        private void AutoConnect_Load(object sender, EventArgs e)
+        {
+            LoadAndConnect();
+            NetworkTimer.Enabled = true;
+        }
+        public void AddToBox(string s)
         {
             if(MsgBox.InvokeRequired)
             {
@@ -63,11 +69,47 @@ namespace webnode.Forms
             MainForm.pMainForm.CommandLineWin.NodeLinker.CancelAsync();
             if (CommLineForm.bConnect)
                 MainForm.pMainForm.CommandLineWin.ExecCommand("disconnect");
-        }
+            ConnectBtn.Enabled = true;
+            DisconnectBtn.Enabled = false;
 
+        }
+        private void SaveNetworks()
+        {
+            string[] str = { "吊放IP" };
+            
+            string[] cportstr = { "命令端口" };
+ 
+            string[] dportstr = { "数据端口" };
+            XmlHelper.SetConfigValue(xmldoc, str, IpaddBox.Text);
+            XmlHelper.SetConfigValue(xmldoc, cportstr, CommportBox.Text);
+            XmlHelper.SetConfigValue(xmldoc, dportstr, DataportBox.Text);
+        }
         private void ConnectBtn_Click(object sender, EventArgs e)
         {
+            IPAddress addr = new IPAddress(0x1234);
+            if (IPAddress.TryParse(IpaddBox.Text, out addr)==false)
+            {
+                MessageBox.Show("无法解析IP地址！请修改吊放IP");
+                return;
+            }
+            SaveNetworks();
+            LoadAndConnect();
+        }
 
+        private void NetworkTimer_Tick(object sender, EventArgs e)
+        {
+            if (MainForm.pMainForm.CommandLineWin.Tclient != null && MainForm.pMainForm.CommandLineWin.Tclient.Client != null&&
+                MainForm.pMainForm.CommandLineWin.Tclient.Connected)
+            {
+                ConnectBtn.Enabled = false;
+                DisconnectBtn.Enabled = true;
+                Hide();
+            }
+            else
+            {
+                ConnectBtn.Enabled = true;
+                DisconnectBtn.Enabled = false;
+            }
         }
     }
 }

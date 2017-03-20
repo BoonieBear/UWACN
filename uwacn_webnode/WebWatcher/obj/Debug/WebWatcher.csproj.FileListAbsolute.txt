@@ -1,0 +1,6 @@
+C:\Users\xifu\My Work\code\UWACN\uwacn_webnode\webnode\bin\Debug\WebWatcher.exe.config
+C:\Users\xifu\My Work\code\UWACN\uwacn_webnode\webnode\bin\Debug\WebWatcher.exe
+C:\Users\xifu\My Work\code\UWACN\uwacn_webnode\webnode\bin\Debug\WebWatcher.pdb
+C:\Users\xifu\My Work\code\UWACN\uwacn_webnode\WebWatcher\obj\Debug\WebWatcher.csprojResolveAssemblyReference.cache
+C:\Users\xifu\My Work\code\UWACN\uwacn_webnode\WebWatcher\obj\Debug\WebWatcher.exe
+C:\Users\xifu\My Work\code\UWACN\uwacn_webnode\WebWatcher\obj\Debug\WebWatcher.pdb

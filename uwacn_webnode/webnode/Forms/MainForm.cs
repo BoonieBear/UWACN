@@ -128,7 +128,12 @@ namespace webnode
             AutoConnectWin.WindowState = FormWindowState.Normal;
             AutoConnectWin.Show();
             AutoConnectWin.ShowInTaskbar = false;
-
+            string[] ipstr = { "吊放IP" };
+            IPAddress addr = new IPAddress(0x1234);
+            if (IPAddress.TryParse(XmlHelper.GetConfigValue(xmldoc, ipstr), out addr))
+            {
+                IpConnect.ControlText = addr.ToString();
+            }
         }
 
         #region 网络速度测试
@@ -266,8 +271,8 @@ namespace webnode
             DialogResult result = MessageBox.Show(message, caption, buttons, icon, defaultResult);
             if (result == DialogResult.OK)
             {
-                
-               Environment.Exit(0);
+                Close();
+                Environment.Exit(0);
             }
         }
         /// <summary>

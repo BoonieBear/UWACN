@@ -169,7 +169,41 @@ namespace webnode.Helper
                 return null;
             }
         }
-
+        /// <summary>
+        /// 各级输入的各级节点名称修改需要的值
+        /// </summary>
+        /// <param name="xmldoc">xml文件名</param>
+        /// <param name="nodename">各级节点名称</param>
+        /// <returns>配置值</returns>
+        public static bool SetConfigValue(string xmldoc, string[] nodename, string value)
+        {
+            try
+            {
+                if (!File.Exists(xmldoc))
+                    return false;
+                XmlDocument xmlfile = new XmlDocument();
+                xmlfile.Load(xmldoc);
+                XmlNode xn = xmlfile.DocumentElement;
+                foreach (string str in nodename)
+                {
+                    xn = xn.SelectSingleNode("descendant::" + str);
+                }
+                if (xn != null)
+                {
+                    xn.InnerText = value;
+                    xmlfile.Save(xmldoc);
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception MyEx)
+            {
+                //MessageBox.Show(MyEx.StackTrace.ToString());
+                //没有要找的内容
+                Debug.WriteLine(MyEx.StackTrace);
+                return false;
+            }
+        }
         #endregion
 
         #region 私有方法
