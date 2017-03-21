@@ -115,7 +115,8 @@ namespace webnode.Forms
         delegate void AddNodeCallback(string nodename, PointLatLng p, int type,float direction);
         ///记录数据个数数组
         int[] NodeTicks = new int[64];
-        //List<DateTime> NodeStamps = new List<DateTime>(64);
+        Dictionary<int,DateTime> NodeStamps = new Dictionary<int, DateTime>(64);
+        Dictionary<int, int> NodeThreshold = new Dictionary<int, int>(64);
         //每次收到数据后解析出的源节点列表
         public static List<int> SourceNode = new List<int>();
         /// 委托
@@ -175,6 +176,7 @@ namespace webnode.Forms
         UdpClient DataUdpClient;//数据UDP
         public UdpClient OutDataudpClient;//往外广播数据
         int outputport = 10020;//广播数据端口
+        System.Windows.Forms.Timer AlarmClock = new System.Windows.Forms.Timer();
         //记录消息类型
         public enum MsgMode
         {
@@ -229,6 +231,35 @@ namespace webnode.Forms
             MyExecPath = System.IO.Path.GetDirectoryName(
                 System.Reflection.Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName);
             xmldoc = MyExecPath + "\\" + "config.xml";
+            AlarmClock.Interval = 30000;
+            AlarmClock.Tick += new EventHandler(Alarm_Tick);
+            AlarmClock.Start();
+        }
+
+        private void Alarm_Tick(object sender, EventArgs e)
+        {
+            foreach (int key in NodeStamps.Keys)
+            {
+                if(NodeThreshold.ContainsKey(key)&& NodeThreshold[key]!=0)
+                {
+                    if(DateTime.Now.Subtract(NodeStamps[key]).TotalSeconds> NodeThreshold[key])
+                    {
+                        string nodename = "节点" + key.ToString();
+                        string msg = "Alarm:" + nodename + "从" + NodeStamps[key].ToString() + "开始未收到数据！";
+                        WriteLog(msg);
+                        
+                        foreach (GMapMarker g in WebNodeLayer.Markers)
+                        {
+                            if (g.Tag.ToString() == nodename)//有同名的节点
+                            {
+                                g.ToolTipMode = MarkerTooltipMode.Always;
+                                g.ToolTipText = nodename + "\r\n" + msg;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -665,7 +696,10 @@ namespace webnode.Forms
             int d = (int)NodeTicks[id];
             d++;
             NodeTicks[id] = d;
-           
+           if(NodeStamps.ContainsKey(id))
+            {
+                NodeStamps[id] = DateTime.Now;
+            }
             
         }
         /// <summary>
@@ -848,7 +882,12 @@ namespace webnode.Forms
                 p.Offset(GmapToGpsOffset);
                 newnode.ToolTipText = newnode.Tag.ToString() + "\r\n" + describe + "\r\n"; //+ "{经度=" + p.Lng.ToString("F08", CultureInfo.InvariantCulture) + "，纬度=" + p.Lat.ToString("F08", CultureInfo.InvariantCulture) + "}";
                 WebNodeLayer.Markers.Add(newnode);
-
+                //add node into stamp dictionary
+                int id = int.Parse(node.Name.TrimStart('节', '点'));
+                NodeStamps.Add(id, DateTime.Now);
+                string[] threshold = { "节点配置", node.Name, "报警阈值" };
+                int ithreshold = int.Parse(XmlHelper.GetConfigValue(xmldoc, threshold));
+                NodeThreshold.Add(id, ithreshold);
             }
         }
 
@@ -1000,11 +1039,24 @@ namespace webnode.Forms
             xmlnode.AppendChild(descxmlnode);
             xmlnode.AppendChild(netxmlnode);
             XmlElement AlarmThreaholdnode = xmlfile.CreateElement("报警阈值");
-            AlarmThreaholdnode.InnerText = "600";//10mins
+            int id = int.Parse(newnode.Tag.ToString().TrimStart('节', '点'));
+            if(NodeStamps.ContainsKey(id))//修改节点信息
+            {
+                string[] threshold = { "节点配置", newnode.Tag.ToString(), "报警阈值" };
+                int ithreshold = int.Parse(XmlHelper.GetConfigValue(xmldoc, threshold));
+                AlarmThreaholdnode.InnerText = ithreshold.ToString();
+            }
+            else
+            {
+                AlarmThreaholdnode.InnerText = "600";//10mins
+            }
+            
             xmlnode.AppendChild(AlarmThreaholdnode);
             xn.AppendChild(xmlnode);
             xmlfile.Save(xmldoc);
+            
 
+            NodeStamps.Add(id, DateTime.Now);
         }
 
         void Markers_CollectionChanged(object sender, GMap.NET.ObjectModel.NotifyCollectionChangedEventArgs e)
@@ -1188,6 +1240,9 @@ namespace webnode.Forms
                                 NodeRouteMap.Clear();
                                 NodeNetMap.Clear();
                                 SaveInit();
+                                int id = int.Parse(delnode.Tag.ToString().TrimStart('节', '点'));
+                                NodeStamps.Remove(id);
+                                NodeThreshold.Remove(id);
                             }
                             AddNet();
                             //AddRoutes();
@@ -1554,6 +1609,9 @@ namespace webnode.Forms
                         NodeRouteMap.Clear();
                         NodeNetMap.Clear();
                         SaveInit();
+                        int id = int.Parse(delnode.Tag.ToString().TrimStart('节', '点'));
+                        NodeStamps.Remove(id);
+                        NodeThreshold.Remove(id);
                     }
                     //AddRoutes();
                     AddNet();
@@ -2217,6 +2275,9 @@ namespace webnode.Forms
                     XmlNode father = xmlfile.SelectSingleNode("descendant::节点配置");
                     if (xn != null)
                     {
+                        int id = int.Parse(nodename[0].TrimStart('节', '点'));
+                        NodeStamps.Remove(id);
+                        NodeThreshold.Remove(id);
                         father.RemoveChild(xn);
                         xmlfile.Save(xmldoc);
                     }
