@@ -115,6 +115,7 @@ namespace webnode.Forms
         delegate void AddNodeCallback(string nodename, PointLatLng p, int type,float direction);
         ///记录数据个数数组
         int[] NodeTicks = new int[64];
+        //List<DateTime> NodeStamps = new List<DateTime>(64);
         //每次收到数据后解析出的源节点列表
         public static List<int> SourceNode = new List<int>();
         /// 委托
@@ -188,7 +189,7 @@ namespace webnode.Forms
         {
             InitializeComponent();
             Array.Clear(NodeTicks,0,64);
-
+            
             mainOverlay = new GMapOverlay(MainMap, "map");
             MainMap.Overlays.Add(mainOverlay);
            
@@ -227,7 +228,7 @@ namespace webnode.Forms
             g = MainMap.CreateGraphics();
             MyExecPath = System.IO.Path.GetDirectoryName(
                 System.Reflection.Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName);
-            xmldoc = MyExecPath + "\\" + "config.xml"; ;
+            xmldoc = MyExecPath + "\\" + "config.xml";
         }
 
         /// <summary>
@@ -847,6 +848,7 @@ namespace webnode.Forms
                 p.Offset(GmapToGpsOffset);
                 newnode.ToolTipText = newnode.Tag.ToString() + "\r\n" + describe + "\r\n"; //+ "{经度=" + p.Lng.ToString("F08", CultureInfo.InvariantCulture) + "，纬度=" + p.Lat.ToString("F08", CultureInfo.InvariantCulture) + "}";
                 WebNodeLayer.Markers.Add(newnode);
+
             }
         }
 
@@ -997,6 +999,9 @@ namespace webnode.Forms
             xmlnode.AppendChild(posxmlnode);
             xmlnode.AppendChild(descxmlnode);
             xmlnode.AppendChild(netxmlnode);
+            XmlElement AlarmThreaholdnode = xmlfile.CreateElement("报警阈值");
+            AlarmThreaholdnode.InnerText = "600";//10mins
+            xmlnode.AppendChild(AlarmThreaholdnode);
             xn.AppendChild(xmlnode);
             xmlfile.Save(xmldoc);
 
