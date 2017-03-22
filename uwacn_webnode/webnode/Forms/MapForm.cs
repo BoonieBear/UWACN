@@ -253,6 +253,7 @@ namespace webnode.Forms
                             if (g.Tag.ToString() == nodename)//有同名的节点
                             {
                                 g.ToolTipMode = MarkerTooltipMode.Always;
+                                g.ToolTip.Foreground = new SolidBrush(Color.FromArgb(222, Color.Red)); ;
                                 g.ToolTipText = nodename + "\r\n" + msg;
                                 break;
                             }
