@@ -709,8 +709,10 @@ namespace webnode.Forms
                 return;
             }
             HbClient.BeginConnect(IPAddress.Parse("127.0.0.1"), 32100, new AsyncCallback(HBConnnectCallBack), HbClient);
+            int count = 0;
             while (true)
             {
+                count++;
                 Thread.Sleep(50);
                 if (MyWorker.CancellationPending == false)
                 {
@@ -726,6 +728,8 @@ namespace webnode.Forms
                     //e.Cancel = true;
                     return;
                 }
+                if (count > 100)//5s
+                    break;
             }
 
 
