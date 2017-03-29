@@ -466,7 +466,7 @@ namespace webnode.Forms
                 SendStatusLabel("未连接节点");
                 ConnNodeBtn.Text = "连接节点";
                 AddtoBox(Color.Black, "与节点断开\r\n");
-            
+                bConnect = false;
             }
         }
         #endregion
@@ -614,6 +614,19 @@ namespace webnode.Forms
             }
 
         }
+        private static void HBConnnectCallBack(IAsyncResult ar)
+        {
+            try
+            {
+                TcpClient t = (TcpClient)ar.AsyncState;
+                t.EndConnect(ar);
+            }
+            catch (Exception ex)
+            {
+                //bConnect = false;
+            }
+
+        }
         private void connect(IPAddress ipaddr, BackgroundWorker MyWorker, DoWorkEventArgs e)
         {
             if (MyWorker.CancellationPending)
@@ -695,7 +708,7 @@ namespace webnode.Forms
                 AddtoBox(Color.Black, "数据端口连接失败。\r\n");
                 return;
             }
-            HbClient.BeginConnect(IPAddress.Parse("127.0.0.1"), 32100, new AsyncCallback(ConnnectCallBack), HbClient);
+            HbClient.BeginConnect(IPAddress.Parse("127.0.0.1"), 32100, new AsyncCallback(HBConnnectCallBack), HbClient);
             while (true)
             {
                 Thread.Sleep(50);
