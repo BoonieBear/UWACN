@@ -253,8 +253,11 @@ namespace webnode.Forms
                             if (g.Tag.ToString() == nodename)//有同名的节点
                             {
                                 g.ToolTipMode = MarkerTooltipMode.Always;
-                                g.ToolTip.Foreground = new SolidBrush(Color.FromArgb(222, Color.Red)); ;
+                                g.ToolTip.Foreground = new SolidBrush(Color.FromArgb(222, Color.Red));
                                 g.ToolTipText = nodename + "\r\n" + msg;
+                                string[] desc = { "节点配置", nodename, "节点描述" };
+                                string describe = XmlHelper.GetConfigValue(xmldoc, desc);
+                                XmlHelper.SetConfigValue(xmldoc, desc, describe + msg);
                                 break;
                             }
                         }
@@ -678,7 +681,7 @@ namespace webnode.Forms
                     {
                         string[] desc = { "节点配置", nodename, "节点描述" };
                         string describe = XmlHelper.GetConfigValue(xmldoc, desc);
-
+                        g.ToolTip.Foreground = new SolidBrush(Color.FromArgb(222, Color.White));
                         g.ToolTipText = nodename + "\r\n" + describe + "\r\n" + strtime.Remove(0, 5) + "(" + ticks + ")";
                     }
                 }
@@ -881,7 +884,16 @@ namespace webnode.Forms
                 newnode.IsHitTestVisible = true;
                 newnode.ToolTipMode = WebVisibleCheck.Checked ? MarkerTooltipMode.Always : MarkerTooltipMode.OnMouseOver;
                 p.Offset(GmapToGpsOffset);
-                newnode.ToolTipText = newnode.Tag.ToString() + "\r\n" + describe + "\r\n"; //+ "{经度=" + p.Lng.ToString("F08", CultureInfo.InvariantCulture) + "，纬度=" + p.Lat.ToString("F08", CultureInfo.InvariantCulture) + "}";
+                if (describe.Contains("Alarm"))
+                {
+                    describe = describe.Substring(describe.IndexOf("Alarm"));
+                    newnode.ToolTip.Foreground = new SolidBrush(Color.FromArgb(222, Color.Red));
+                    newnode.ToolTipText = node.Name + "\r\n" + describe;
+                }
+                else
+                {
+                    newnode.ToolTipText = newnode.Tag.ToString() + "\r\n" + describe + "\r\n"; //+ "{经度=" + p.Lng.ToString("F08", CultureInfo.InvariantCulture) + "，纬度=" + p.Lat.ToString("F08", CultureInfo.InvariantCulture) + "}";
+                }
                 WebNodeLayer.Markers.Add(newnode);
                 //add node into stamp dictionary
                 int id = int.Parse(node.Name.TrimStart('节', '点'));
@@ -4608,44 +4620,26 @@ namespace webnode.Forms
             pause.Enabled = false;
 
         }
+
         #endregion
 
-        
+        private void 清除报警信息ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            foreach (GMapMarker gm in WebNodeLayer.Markers)
+            {
+                gm.ToolTip.Foreground = new SolidBrush(Color.FromArgb(222, Color.WhiteSmoke));
+                var name = gm.Tag.ToString();
+                var id = int.Parse(name.TrimStart('节', '点'));
+                if(NodeStamps.ContainsKey(id))
+                {
+                    NodeStamps[id] = DateTime.Now;
+                }
+                string[] desc = { "节点配置", name, "节点描述" };
+                string describe = XmlHelper.GetConfigValue(xmldoc, desc);
+                describe = describe.Remove(describe.IndexOf("Alarm"));
+                gm.ToolTipText = name + "\r\n" + describe + "\r\n";
+            }
+        }
     }
 }
